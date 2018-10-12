@@ -1,29 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RealFunction = System.Func<double, double>;
 
 namespace mathlib
 {
     public interface IFunctionsSystem
     {
         Segment OrthogonalitySegment { get; }
-        Func<double, double> Get(int k);
+        RealFunction Get(int k);
+        RealFunction GetWeighted(int k);
         IEnumerable<double> GetValuesOnNet(int k, double[] nodes);
+        IEnumerable<double> GetWeightedValuesOnNet(int k, double[] nodes);
     }
 
     public abstract class FunctionsSystem : IFunctionsSystem
     {
-        public abstract Func<double, double> Get(int k);
+        public abstract RealFunction Get(int k);
         public abstract Segment OrthogonalitySegment { get; }
         public virtual IEnumerable<double> GetValuesOnNet(int k, double[] nodes) =>
             nodes.Select(Get(k));
+
+        //for weighted functions systems
+        public RealFunction weight = OrthogonalWeights.UniteWeight;
+        public virtual RealFunction GetWeighted(int k) =>
+                                                          (x => Get(k)(x) * weight(x));
+        public virtual IEnumerable<double> GetWeightedValuesOnNet(int k, double[] nodes) =>
+            nodes.Select(GetWeighted(k));
     }
 
     public class CosSystem : FunctionsSystem
     {
         private static readonly double Sqrt2 = Math.Sqrt(2);
 
-        public override Func<double, double> Get(int k)
+        public override RealFunction Get(int k)
         {
             if (k == 0)
                 return x => 1;
@@ -31,12 +41,14 @@ namespace mathlib
         }
 
         public override Segment OrthogonalitySegment => new Segment(0, 1);
+
+        public override RealFunction GetWeighted(int k) => Get(k);
     }
 
     public class SobolevCosSystem : FunctionsSystem
     {
         private static readonly double Sqrt2OverPi = Math.Sqrt(2.0) / Math.PI;
-        public override Func<double, double> Get(int k)
+        public override RealFunction Get(int k)
         {
             switch (k)
             {
@@ -49,6 +61,8 @@ namespace mathlib
         }
 
         public override Segment OrthogonalitySegment => new Segment(0, 1);
+
+        public override RealFunction GetWeighted(int k) => Get(k);
     }
 
 
@@ -56,27 +70,74 @@ namespace mathlib
 
 
 
-
-    public class Cheb1System : FunctionsSystem
+    /// <summary>
+    /// Chebyshev polynomials orthonormal on (-1,1) with weight \mu(x)=\frac2\pi(1-x^2)^{-\frac12}
+    /// </summary>
+    public class Cheb1SystemMF : FunctionsSystem
     {
         private static readonly double OneOverSqrt2 = 1.0 / Math.Sqrt(2.0);
 
-        public override Func<double, double> Get(int k)
-        {
+        public override RealFunction Get(int k) {
             if (k == 0)
                 return x => OneOverSqrt2;
             return x => Math.Cos(k * Math.Acos(x));
         }
 
         public override Segment OrthogonalitySegment => new Segment(-1, 1);
+
+        //weights and stuff
+
+        new public RealFunction weight = OrthogonalWeights.Cheb1WeightMF;
+
+        public override RealFunction GetWeighted(int k)
+        {
+            if (k == 0)
+                return x => OneOverSqrt2 * weight(x);
+            return x => Math.Cos(k * Math.Acos(x)) * weight(x);
+        }
+
     }
 
-    public class SobolevCheb1System : FunctionsSystem
+
+
+    public class Cheb1SystemMF2 : FunctionsSystem
     {
         private static readonly double OneOverSqrt2 = 1.0 / Math.Sqrt(2.0);
-        private static readonly FunctionsSystem chebSystem = new Cheb1System();
+        private static readonly double Sqrt2OverPi =  Math.Sqrt(2.0) / Math.PI;
 
-        public override Func<double, double> Get(int k)
+        public override RealFunction Get(int k)
+        {
+            if (k == 0)
+                return x => 1.0 / Math.PI / Math.Sqrt(1.0 - x * x);
+            return x => Sqrt2OverPi * Math.Cos(k * Math.Acos(x)) / Math.Sqrt(1.0 - x * x);
+        }
+
+        public override Segment OrthogonalitySegment => new Segment(-1, 1);
+
+        //weights and stuff
+
+        new public RealFunction weight = x => Sqrt2OverPi / Math.Sqrt(1.0 - x * x);
+
+        public override RealFunction GetWeighted(int k)
+        {
+            if (k == 0)
+                return x => OneOverSqrt2 * weight(x);
+            return x => Math.Cos(k * Math.Acos(x)) * weight(x);
+        }
+
+    }
+
+
+    /// <summary>
+    /// Sobolev orthogonal polynomials, associated with Chebyshev polynomials 
+    /// orthonormal on (-1,1) with weight \mu(x)=\frac2\pi(1-x^2)^{-\frac12}
+    /// </summary>
+    public class SobolevCheb1SystemMF : FunctionsSystem
+    {
+        private static readonly double OneOverSqrt2 = 1.0 / Math.Sqrt(2.0);
+        private static readonly FunctionsSystem chebSystem = new Cheb1SystemMF();
+
+        public override RealFunction Get(int k)
         {
             switch (k)
             {
@@ -95,60 +156,15 @@ namespace mathlib
                     }
             }
         }
+
         public override Segment OrthogonalitySegment => new Segment(-1, 1);
+
+        //weights and stuff
+        new public RealFunction weight = OrthogonalWeights.Cheb1WeightMF;
     }
 
 
         
-
-    public class Cheb1Weight : FunctionsSystem
-    {
-        private static readonly double OneOverSqrt2 = 1.0 / Math.Sqrt(2.0);
-
-        public override Func<double, double> Get(int k)
-        {
-            if (k == 0)
-                return x => OneOverSqrt2;
-            return x => Math.Cos(k * Math.Acos(x));
-        }
-
-        public override Segment OrthogonalitySegment => new Segment(-1, 1);
-    }
-
-
-
-
-
-
-    public static class OrthogonalWeights
-    {
-        private static readonly double Sqrt2OverPi = Math.Sqrt(2.0) / Math.PI;
-
-
-        public static Func<double, double> Cheb1Weight
-        {
-            get
-            {
-                return x => Sqrt2OverPi / Math.Sqrt(1.0 - x * x);
-            }
-        }
-
-        public static Func<double, double> UniteWeight
-        {
-            get
-            {
-                return UniformWeight();
-            }
-        }
-
-        public static Func<double, double> UniformWeight(double A = 1.0)
-        {
-            return x => A;
-        }
-
-    }
-
-
 
 
 

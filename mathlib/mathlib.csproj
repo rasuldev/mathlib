@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -58,8 +59,10 @@
   <ItemGroup>
     <Compile Include="Binomial.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DiffEq\SobolevSpectralOdeOperator.cs" />
     <Compile Include="DiffEq\CosSpectralOdeOperator.cs" />
     <Compile Include="DiffEq\CauchyProblem.cs" />
+    <Compile Include="DiffEq\SobolevSpectralSolverIter.cs" />
     <Compile Include="DiffEq\Solver.cs" />
     <Compile Include="ChebRobustCalc.cs" />
     <Compile Include="DiffEq\CosSpectralSolverIter.cs" />
@@ -69,6 +72,8 @@
     <Compile Include="FourierDiscretePartialSum.cs" />
     <Compile Include="FourierSobolevHaar.cs" />
     <Compile Include="FourierWalsh.cs" />
+    <Compile Include="OrthogonalWeight.cs" />
+    <Compile Include="OrthogonalWeights.cs" />
     <Compile Include="FunctionsSystem.cs" />
     <Compile Include="Functions\Walsh.cs" />
     <Compile Include="Functions\WalshSobolev.cs" />

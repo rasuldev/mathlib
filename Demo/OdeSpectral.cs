@@ -26,7 +26,7 @@ namespace Demo
     {
         MultiPlot2D exactSolutionPlot = new MultiPlot2D(name: "Точное решение");
         MultiPlot2D numSolutionPlotIter = new MultiPlot2D(name: "Численное решение итерационным методом");
-        MultiPlot2D numSolutionPlotIter2 = new MultiPlot2D(name: "Численное решение итерационным методом2");
+        MultiPlot2D numSolutionPlotIter2 = new MultiPlot2D(name: "Численное решение итерационным методом 2");
 
         private static Color[] Colors = new[]
         {
@@ -55,10 +55,20 @@ namespace Demo
                 exactSolutionPlot.Refresh();
             }
             //nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / nodesCount).ToArray();
-            var cosSystem = new CosSystem();
-            var sobCosSystem = new SobolevCosSystem();
 
-            var solverIter = new CosSpectralSolverIter(1000);
+            // *************** Cos System: ***************
+            /*var cosSystem = new CosSystem();
+            var sobCosSystem = new SobolevCosSystem();
+            var solverIter = new SobolevSpectralSolverIter(1000, cosSystem, sobCosSystem);*/
+            //var solverIter = new CosSpectralSolverIter(1000);
+
+            // *************** Chebyshev 1 MF System:  ***************
+            var cheb1SystemMF = new Cheb1SystemMF2();
+            var sobCheb1SystemMF = new SobolevCheb1SystemMF();
+            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF, true);
+            var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF);
+
+
             var problem = new CauchyProblem(f, y0, segment);
             var df = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
             //df.X = df.X.Select(x => x).ToArray();
