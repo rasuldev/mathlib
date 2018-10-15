@@ -116,12 +116,12 @@ namespace mathlib.DiffEq
             // fArgs[j] = $(h t_j, \eta_0(t_j), ..., \eta_{m-1}(t_j))$.
             var fArgs = new double[_nodes.Length][];
 
-            for (int j = 0; j < _nodes.Length; j++)
-            {
+            for (int j = 0; j < _nodes.Length; j++) {
+
                 fArgs[j] = new double[_m + 1];
                 fArgs[j][0] = _nodes[j];
-                for (int k = 1; k < _m + 1; k++)
-                {
+
+                for (int k = 1; k < _m + 1; k++) {
                     fArgs[j][k] = eta[k - 1][j];
                 }
             }
@@ -138,8 +138,8 @@ namespace mathlib.DiffEq
         /// <summary>
         /// Calculates $c_k(f_j)$
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="k"></param>
+        /// <param name="i">    </param>
+        /// <param name="k">    </param>
         /// <param name="fArgs"></param>
         /// <returns></returns>
         private double CalcCoeff(int i, int k, double[][] fArgs)

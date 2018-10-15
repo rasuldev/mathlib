@@ -63,11 +63,12 @@ namespace Demo
             //var solverIter = new CosSpectralSolverIter(1000);
 
             // *************** Chebyshev 1 MF System:  ***************
-            var cheb1SystemMF = new Cheb1SystemMF2();
+            //var cheb1SystemMF = new Cheb1SystemMF_rec();
+            var cheb1SystemMF = new Cheb1SystemMF();
             var sobCheb1SystemMF = new SobolevCheb1SystemMF();
-            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF, true);
-            var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF);
-
+            var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF, true);
+            //var cheb1SystemMF2 = new Cheb1SystemMF_weighted();
+            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF2, sobCheb1SystemMF);
 
             var problem = new CauchyProblem(f, y0, segment);
             var df = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);

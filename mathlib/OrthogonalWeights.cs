@@ -8,13 +8,14 @@ namespace mathlib
     public static class OrthogonalWeights
     {
         private static readonly double Sqrt2OverPi = Math.Sqrt(2.0) / Math.PI;
+        private static readonly double TwoOverPi   = 2.0 / Math.PI;
 
 
         public static Func<double, double> Cheb1WeightMF
         {
             get
             {
-                return x => Sqrt2OverPi / Math.Sqrt( 1.0 - x * x);
+                return x => TwoOverPi / Math.Sqrt( 1.0 - x * x);
             }
         }
 
