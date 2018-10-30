@@ -8,7 +8,7 @@ namespace mathlib
 {
     public static class SobolevHaarLinearCombination
     {
-        private static double sqrt2 = Math.Sqrt(2);
+        private static readonly double sqrt2 = Math.Sqrt(2);
 
         //метод вычисления линейной комбинации S_{1,N}(x)
         public static double FastCalc(double[] alpha, double x)
@@ -57,14 +57,17 @@ namespace mathlib
         {
             double[] result = new double[n];
 
+            // $n = 2^k + j$
             var (k, j) = Common.Decompose(n);
             double[] a = new double[1 << (k + 1)];
 
+            double pow2k = 1 << k;
+            double pow2k2 = Math.Pow(2, (k + 1) / 2.0);
+
+            // нахождение вспомогательных коэффициентов $a_{k + 1, i}$ с помощью интегралов
             for (int i = 1; i <= a.Length / 2; i++)
             {
                 double[] edge = new double[3];
-                double pow2k = Math.Pow(2, k);
-                double pow2k2 = Math.Pow(2, (k + 1) / 2.0);
 
                 edge[0] = (i - 1.0) / pow2k;
                 edge[1] = (2 * i - 1.0) / ((int)pow2k << 1);
@@ -74,21 +77,22 @@ namespace mathlib
                 a[2 * i - 1] = pow2k2 * Integrals.Rectangular(func, edge[1], edge[2], 2, Integrals.RectType.Center);
             }
 
-            double sqrt2 = Math.Sqrt(2);
-
+            // вычисление коэффициентов $b_{k, j}$ последней пачки с помощью $a_{k + 1}$
             for (int i = 1; i <= j; i++)
             {
-                result[(int)Math.Pow(2, k) + i - 1] = (a[2 * i - 2] - a[2 * i - 1]) / sqrt2;
+                result[(int)pow2k + i - 1] = (a[2 * i - 2] - a[2 * i - 1]) / sqrt2;
             }
 
-            for (int i = 1; i <= Math.Pow(2, k); i++)
+            // вычисление вспомогательных коэффициентов 
+            for (int i = 1; i <= pow2k; i++)
             {
                 a[i - 1] = (a[2 * i - 2] + a[2 * i - 1]) / sqrt2;
             }
 
+            // вычисление остальных коэффициентов $a$ и $c$ 
             for (int l = k - 1; l >= 0; l--)
             {
-                int pow2l = (int)Math.Pow(2, l);
+                int pow2l = 1 << l;
                 for (int i = 1; i <= pow2l; i++)
                 {
                     result[pow2l + i - 1] = (a[2 * i - 2] - a[2 * i - 1]) / sqrt2;
