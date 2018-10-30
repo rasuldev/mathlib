@@ -29,7 +29,29 @@ namespace mathlib
             nodes.Select(GetWeighted(k));
     }
 
+    public class HaarSystem : FunctionsSystem
+    {
+        public override Segment OrthogonalitySegment => new Segment(0, 1);
 
+        public override RealFunction Get(int k)
+        {
+            return MixHaar.Haar(++k);
+        }
+
+        public override RealFunction GetWeighted(int k) => Get(k);
+    }
+
+    public class SobolevHaarSystem : FunctionsSystem
+    {
+        public override Segment OrthogonalitySegment => new Segment(0, 1);
+
+        public override RealFunction Get(int k)
+        {
+            return MixHaar.MixedHaar1(++k);
+        }
+
+        public override RealFunction GetWeighted(int k) => Get(k);
+    }
 
     /*      *****************************************         */
     /*      Cosine system and associated Sobolev sys.         */

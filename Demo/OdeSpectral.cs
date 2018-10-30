@@ -62,11 +62,14 @@ namespace Demo
             var solverIter = new SobolevSpectralSolverIter(1000, cosSystem, sobCosSystem);*/
             //var solverIter = new CosSpectralSolverIter(1000);
 
+            // *************** Haar System: ***************
+            var solverIter = new HaarSpectralSolveriter(1000);
+
             // *************** Chebyshev 1 MF System:  ***************
             //var cheb1SystemMF = new Cheb1SystemMF_rec();
-            var cheb1SystemMF = new Cheb1SystemMF();
-            var sobCheb1SystemMF = new SobolevCheb1SystemMF();
-            var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF, true);
+            //var cheb1SystemMF = new Cheb1SystemMF();
+            //var sobCheb1SystemMF = new SobolevCheb1SystemMF();
+            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF, true);
             //var cheb1SystemMF2 = new Cheb1SystemMF_weighted();
             //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF2, sobCheb1SystemMF);
 
@@ -99,7 +102,11 @@ namespace Demo
             var cosSystem = new CosSystem();
             var sobCosSystem = new SobolevCosSystem();
 
-            var solverIter = new CosSpectralSolverIter(1000);
+            //var solverIter = new CosSpectralSolverIter(1000);
+
+            // *************** Haar System: ***************
+            var solverIter = new HaarSpectralSolveriter(1000);
+
             var problem = new CauchyProblem(f, initVals, segment);
             var solution = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
             var dfs = new List<DiscreteFunction2D>();
