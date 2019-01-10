@@ -76,6 +76,80 @@ namespace Demo
             var h = 0.1d;
             return (new Segment(0, h), initVals, f, h, new Func<double, double>[] { x => x + Sin(10 * x), x => Sin(5 * x) });
         }
+
+        public static (Segment segment, double[] initVals, DynFunc<double>[] f, double h, Func<double, double>[] yExact) ExampleSystem7()
+        {
+            var initVals = new[] { 2, 0d, -4 };
+            var f = new DynFunc<double>[]
+            {
+                new DynFunc<double>(4, args => 1 * args[1] + -1 * args[2] + -1 * args[3]),
+                new DynFunc<double>(4, args => 1 * args[1] + 1 * args[2] + 0 * args[3]),
+                new DynFunc<double>(4, args => 3 * args[1] + 0 * args[2] + 1 * args[3])
+            };
+
+            var h = PI / 2;
+            return (new Segment(0, h), initVals, f, h, new Func<double, double>[] 
+            {
+                x => Exp(x) * (2 * Sin(2 * x) + 2 * Cos(2 * x)),
+                x => Exp(x) * (1 - Cos(2 * x) + Sin(2 * x)),
+                x => Exp(x) * (-1 - 3 * Cos(2 * x) + 3 * Sin(2 * x)),
+            });
+        }
+
+        public static (Segment segment, double[] initVals, DynFunc<double>[] f, double h, Func<double, double>[] yExact) ExampleSystem8()
+        {
+            Segment segment = new Segment(0, PI / 2);
+
+            Func<double, double>[] funcs = new Func<double, double>[]
+            {
+                x => Exp(x) * (Cos(3 * x) + Sin(3 * x)),
+                x => Exp(x) * (Sin(3 * x) - Cos(3 * x))
+            };
+
+            var initVals = new[] { funcs[0](segment.Start), funcs[1](segment.Start) };
+            var f = new DynFunc<double>[]
+            {
+                new DynFunc<double>(3, args => 1 * args[1] + -3 * args[2]),
+                new DynFunc<double>(3, args => 3 * args[1] + 1 * args[2])
+            };
+
+            return (segment, initVals, f, segment.End, funcs);
+        }
+
+        public static (Segment segment, double[] initVals, DynFunc<double>[] f, double h, Func<double, double>[] yExact) ExampleSystem9()
+        {
+            var initVals = new[] { 1d, 1d };
+            var f = new DynFunc<double>[]
+            {
+                new DynFunc<double>(3, args => -1 * args[1] + -5 * args[2]),
+                new DynFunc<double>(3, args => 1 * args[1] + 1 * args[2])
+            };
+
+            var h = PI;
+            return (new Segment(0, h), initVals, f, h, new Func<double, double>[]
+            {
+                x => Cos(2 * x) - 3 * Sin(2 * x),
+                x => Cos(2 * x) + Sin(2 * x),
+            });
+        }
+
+        public static (Segment segment, double[] initVals, DynFunc<double>[] f, double h, Func<double, double>[] yExact) ExampleSystem10()
+        {
+            var initVals = new[] { 2d, 0d };
+            var f = new DynFunc<double>[]
+            {
+                new DynFunc<double>(3, args => 1 * args[1] + -1 * args[2]),
+                new DynFunc<double>(3, args => -4 * args[1] + 1 * args[2])
+            };
+
+            var h = 1;
+            return (new Segment(0, h), initVals, f, h, new Func<double, double>[]
+            {
+                x => Exp(-x) + Exp(3 * x),
+                x => 2 * Exp(-x) - 2 * Exp(3 * x),
+            });
+        }
+
         public static (double[] initVals, DynFunc<double>[] f, double h, Func<double, double>[] yExact) ExampleSystem2()
         {
             var initVals = new[] { 0d, 1, 1 };

@@ -3,9 +3,9 @@ using Endless;
 
 namespace mathlib.DiffEq
 {
-    public class HaarSpectralSolveriter : SpectralSolverIterBase
+    public class HaarSpectralSolverIter : SpectralSolverIterBase
     {
-        public HaarSpectralSolveriter(int quadratureNodesCount) :
+        public HaarSpectralSolverIter(int quadratureNodesCount) :
             base(CreateOperator(quadratureNodesCount), CreateIft())
         { }
 
@@ -13,10 +13,7 @@ namespace mathlib.DiffEq
         {
             // Used to calculate coeffs that are represented as integrals
             var quadratureNodes = new Segment(0, 1).GetUniformPartition(quadratureNodesCount);
-            var haarSystem = new HaarSystem();
-            var sobHaarSystem = new SobolevHaarSystem();
-            var op = new HaarSpectralOdeOperator(Natural.NumbersWithZero.Select(k => haarSystem.Get(k)),
-                Natural.NumbersWithZero.Select(k => sobHaarSystem.Get(k)), quadratureNodes);
+            var op = new HaarSpectralOdeOperator(quadratureNodes);
             return op;
         }
 

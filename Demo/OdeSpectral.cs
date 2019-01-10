@@ -30,7 +30,7 @@ namespace Demo
 
         private static Color[] Colors = new[]
         {
-            Color.Red, Color.DarkGreen
+            Color.Red
         };
 
         public OdeSpectral()
@@ -63,7 +63,7 @@ namespace Demo
             //var solverIter = new CosSpectralSolverIter(1000);
 
             // *************** Haar System: ***************
-            var solverIter = new HaarSpectralSolveriter(1000);
+            var solverIter = new HaarSpectralSolverIter(1000);
 
             // *************** Chebyshev 1 MF System:  ***************
             //var cheb1SystemMF = new Cheb1SystemMF_rec();
@@ -90,7 +90,7 @@ namespace Demo
         void SolveSystem(int partSumOrder, int iterCount, int nodesCount)
         {
             var chunksCount = (int)nupChunksCount.Value;
-            var (segment, initVals, f, h, yExact) = ExampleSystem6();
+            var (segment, initVals, f, h, yExact) = ExampleSystem7();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
@@ -105,7 +105,7 @@ namespace Demo
             //var solverIter = new CosSpectralSolverIter(1000);
 
             // *************** Haar System: ***************
-            var solverIter = new HaarSpectralSolveriter(1000);
+            var solverIter = new HaarSpectralSolverIter(1000);
 
             var problem = new CauchyProblem(f, initVals, segment);
             var solution = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
@@ -130,8 +130,8 @@ namespace Demo
 
         private void ValueChanged(object sender, EventArgs e)
         {
-            Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
-            //SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
+            //Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
+            SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
         }
 
 

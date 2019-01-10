@@ -60,7 +60,7 @@
     <Compile Include="Binomial.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DiffEq\HaarSpectralOdeOperator.cs" />
-    <Compile Include="DiffEq\HaarSpectralSolveriter.cs" />
+    <Compile Include="DiffEq\HaarSpectralSolverIter.cs" />
     <Compile Include="DiffEq\SobolevSpectralOdeOperator.cs" />
     <Compile Include="DiffEq\CosSpectralOdeOperator.cs" />
     <Compile Include="DiffEq\CauchyProblem.cs" />

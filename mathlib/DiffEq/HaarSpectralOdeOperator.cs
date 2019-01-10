@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using static System.Linq.Enumerable;
 
@@ -12,12 +11,6 @@ namespace mathlib.DiffEq
         private int _partialSumOrder; // N
         private int _m;
 
-        // ***** Not using in this class *****
-        //private readonly IEnumerable<Func<double, double>> _phi;
-        //private readonly IEnumerable<Func<double, double>> _phiSobolev;
-
-        //private Func<double, double>[] _phiCached;
-        //private Func<double, double>[] _phiSobolevCached;
         /// <summary>
         /// Nodes that are used in quadrature formula of calculating integral
         /// </summary>
@@ -25,10 +18,8 @@ namespace mathlib.DiffEq
 
         public Segment OrthogonalitySegment { get; set; } = new Segment(0, 1);
 
-        public HaarSpectralOdeOperator(IEnumerable<Func<double, double>> phi, IEnumerable<Func<double, double>> phiSobolev, double[] quadratureNodes)
+        public HaarSpectralOdeOperator(double[] quadratureNodes)
         {
-            //_phi = phi;
-            //_phiSobolev = phiSobolev;
             _nodes = quadratureNodes;
         }
 
@@ -38,8 +29,6 @@ namespace mathlib.DiffEq
             _initialValues = initialValues;
             _partialSumOrder = partialSumOrder;
             _m = _f.First().ArgsCount - 1;
-            //_phiCached = _phi.Take(partialSumOrder).ToArray();
-            //_phiSobolevCached = _phiSobolev.Take(partialSumOrder).ToArray();
         }
 
         public double[][] GetValue(double[][] c)
@@ -54,7 +43,6 @@ namespace mathlib.DiffEq
         private double[] CalcEta(int k, double[] c)
         {
             return _nodes
-               //.Select(t => _initialValues[k] + c.Zip(_phiSobolevCached.Skip(1), (ci, phiiPlus1) => ci * phiiPlus1(t)).Sum())
                .Select(t => _initialValues[k] + SobolevHaarLinearCombination.FastCalc(c, t))
                .ToArray();
         }
@@ -73,32 +61,36 @@ namespace mathlib.DiffEq
                 }
             }
 
-            //return Range(0, _m)
-            //    .Select(i => Range(0, _partialSumOrder)
-            //        .Select(k => CalcCoeff(i, k, fArgs)).ToArray()).ToArray();
             return Range(0, _m)
                 .Select(i =>
                 {
+                    var qk = _nodes.Select((t, j) => _f[i].Invoke(fArgs[j])).ToArray();
                     double func(double x)
                     {
-                        var qk = _nodes.Select((t, j) => _f[i].Invoke(fArgs[j])).ToArray();
-                        return qk[FindNode(x)];
+                        return FindNode(x, qk);
                     }
                     return SobolevHaarLinearCombination.Decomposition(func, _partialSumOrder);
                 }).ToArray();
         }
 
-        private int FindNode(double x)
+        private double FindNode(double x, double[] array)
         {
-            int result = 0;
-            for (int i = 1; i < _nodes.Length; i++)
+            if (_nodes[0] == x)
+            {
+                return array[0];
+            }
+            for (int i = 1; i < array.Length; i++)
             {
                 if (_nodes[i] > x)
                 {
-                    return i - 1;
+                    return (array[i - 1] + array[i]) / 2.0;
+                }
+                if (_nodes[i] == x)
+                {
+                    return array[i];
                 }
             }
-            return result;
+            return 0;
         }
     }
 }
