@@ -17,6 +17,9 @@ namespace Demo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SobolevWalsh());
+            //Application.Run(new SobolevWalshPartSumExample());
+            //Application.Run(new OdeSpectral());
+
         }
     }
 }

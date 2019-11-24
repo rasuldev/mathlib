@@ -4,6 +4,6 @@
     {
         void SetParams(DynFunc<double>[] odeRightSides, double[] initialValues, int partialSumOrder);
         T GetValue(T x);
-        Segment OrthogonalitySegment { get; }
+        Segment OrthogonalitySegment { get; set; }
     }
 }

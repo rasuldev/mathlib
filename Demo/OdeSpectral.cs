@@ -26,11 +26,11 @@ namespace Demo
     {
         MultiPlot2D exactSolutionPlot = new MultiPlot2D(name: "Точное решение");
         MultiPlot2D numSolutionPlotIter = new MultiPlot2D(name: "Численное решение итерационным методом");
-        MultiPlot2D numSolutionPlotIter2 = new MultiPlot2D(name: "Численное решение итерационным методом2");
+        MultiPlot2D numSolutionPlotIter2 = new MultiPlot2D(name: "Численное решение итерационным методом 2");
 
         private static Color[] Colors = new[]
         {
-            Color.Red, Color.DarkGreen
+            Color.Red
         };
 
         public OdeSpectral()
@@ -55,10 +55,24 @@ namespace Demo
                 exactSolutionPlot.Refresh();
             }
             //nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / nodesCount).ToArray();
-            var cosSystem = new CosSystem();
-            var sobCosSystem = new SobolevCosSystem();
 
-            var solverIter = new CosSpectralSolverIter(1000);
+            // *************** Cos System: ***************
+            /*var cosSystem = new CosSystem();
+            var sobCosSystem = new SobolevCosSystem();
+            var solverIter = new SobolevSpectralSolverIter(1000, cosSystem, sobCosSystem);*/
+            //var solverIter = new CosSpectralSolverIter(1000);
+
+            // *************** Haar System: ***************
+            var solverIter = new HaarSpectralSolverIter(1000);
+
+            // *************** Chebyshev 1 MF System:  ***************
+            //var cheb1SystemMF = new Cheb1SystemMF_rec();
+            //var cheb1SystemMF = new Cheb1SystemMF();
+            //var sobCheb1SystemMF = new SobolevCheb1SystemMF();
+            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF, true);
+            //var cheb1SystemMF2 = new Cheb1SystemMF_weighted();
+            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF2, sobCheb1SystemMF);
+
             var problem = new CauchyProblem(f, y0, segment);
             var df = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
             //df.X = df.X.Select(x => x).ToArray();
@@ -76,7 +90,7 @@ namespace Demo
         void SolveSystem(int partSumOrder, int iterCount, int nodesCount)
         {
             var chunksCount = (int)nupChunksCount.Value;
-            var (segment, initVals, f, h, yExact) = ExampleSystem6();
+            var (segment, initVals, f, h, yExact) = ExampleSystem7();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
@@ -88,7 +102,11 @@ namespace Demo
             var cosSystem = new CosSystem();
             var sobCosSystem = new SobolevCosSystem();
 
-            var solverIter = new CosSpectralSolverIter(1000);
+            //var solverIter = new CosSpectralSolverIter(1000);
+
+            // *************** Haar System: ***************
+            var solverIter = new HaarSpectralSolverIter(1000);
+
             var problem = new CauchyProblem(f, initVals, segment);
             var solution = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
             var dfs = new List<DiscreteFunction2D>();
@@ -112,8 +130,8 @@ namespace Demo
 
         private void ValueChanged(object sender, EventArgs e)
         {
-            Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
-            //SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
+            //Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
+            SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
         }
 
 
