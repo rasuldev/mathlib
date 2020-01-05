@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mathlib.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RealFunction = System.Func<double, double>;
@@ -48,6 +49,18 @@ namespace mathlib
         public override RealFunction Get(int k)
         {
             return MixHaar.MixedHaar1(++k);
+        }
+
+        public override RealFunction GetWeighted(int k) => Get(k);
+    }
+
+    public class SobolevWalshSystem : FunctionsSystem
+    {
+        public override Segment OrthogonalitySegment => new Segment(0, 1);
+
+        public override RealFunction Get(int k)
+        {
+            return WalshSobolev.Get2(k);
         }
 
         public override RealFunction GetWeighted(int k) => Get(k);
