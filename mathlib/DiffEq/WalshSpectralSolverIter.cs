@@ -25,9 +25,9 @@ namespace mathlib.DiffEq
         {
             return new InvFourierTransformer((coeffs, nodes) =>
             {
-                var sobHaarSystem = new SobolevWalshSystem();
+                var sobWalshSystem = new SobolevWalshSystem();
                 var sobolevPartSum = new FourierDiscretePartialSum(nodes,
-                    Natural.NumbersWithZero.Select(k => sobHaarSystem.Get(k)).Take(coeffs.Length).ToArray());
+                    Natural.NumbersWithZero.Select(k => sobWalshSystem.Get(k)).Take(coeffs.Length).ToArray());
                 return sobolevPartSum.GetValues(coeffs).Y;
             });
         }

@@ -43,7 +43,7 @@ namespace mathlib.DiffEq
         private double[] CalcEta(int k, double[] c)
         {
             return _nodes
-               .Select(t => _initialValues[k] + SobolevHaarLinearCombination.FastCalc(c, t))
+               .Select(t => _initialValues[k] + SobolevWalshLinearCombination.Calc(c, t))
                .ToArray();
         }
 
@@ -62,35 +62,25 @@ namespace mathlib.DiffEq
             }
 
             return Range(0, _m)
-                .Select(i =>
-                {
-                    var qk = _nodes.Select((t, j) => _f[i].Invoke(fArgs[j])).ToArray();
-                    double func(double x)
-                    {
-                        return FindNode(x, qk);
-                    }
-                    return SobolevHaarLinearCombination.Decomposition(func, _partialSumOrder);
-                }).ToArray();
+                .Select(i => Range(0, _partialSumOrder)
+                    .Select(k => CalcCoeff(i, k, fArgs)).ToArray()).ToArray();
         }
 
-        private double FindNode(double x, double[] array)
+        /// <summary>
+        /// Calculates $c_k(f_j)$
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="k"></param>
+        /// <param name="fArgs"></param>
+        /// <returns></returns>
+        private double CalcCoeff(int i, int k, double[][] fArgs)
         {
-            if (_nodes[0] == x)
-            {
-                return array[0];
-            }
-            for (int i = 1; i < array.Length; i++)
-            {
-                if (_nodes[i] > x)
-                {
-                    return (array[i - 1] + array[i]) / 2.0;
-                }
-                if (_nodes[i] == x)
-                {
-                    return array[i];
-                }
-            }
-            return 0;
+            // qk[j] = $f_k(h t_j, \eta_0(t_j), ..., \eta_{m-1}(t_j)) * phi_k(t_j)$,
+            // so qk is a vector of values of function $q_k(t)=f_k(ht,\eta_0(t),...) phi(t)$ in _nodes
+            var qk = _nodes.Select((t, j) => _f[i].Invoke(fArgs[j]) * _phiCached[k](t));
+            return Integrals.Trapezoid(qk.ToArray(), _nodes);
         }
+
+
     }
 }
