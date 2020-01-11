@@ -101,7 +101,7 @@ namespace mathlib.DiffEq
         }
 
         /// <summary>
-        /// Calculates $c_k(f_j)$
+        /// Calculates $c_k(f_i)$
         /// </summary>
         /// <param name="i"></param>
         /// <param name="k"></param>

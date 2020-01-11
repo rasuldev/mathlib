@@ -64,5 +64,22 @@ namespace mathlib
             int i = n - (1 << k);
             return (k, i);
         }
+
+        /// <summary>
+        /// Returns minimal k>=0 such that n<2^{k+1}
+        /// </summary>
+        /// <param name="n">Nonnegative number</param>
+        /// <returns></returns>
+        public static int GetClosestPowerOf2(int n)
+        {
+            var k = 0;
+            var pow2 = 1;
+            while (n >= pow2)
+            {
+                ++k; 
+                pow2 *= 2;
+            }
+            return k;
+        }
     }
 }

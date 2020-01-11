@@ -16,8 +16,8 @@ namespace mathlib.DiffEq
         private static ISpectralOdeOperator<double[][]> CreateOperator(int quadratureNodesCount)
         {
             // Used to calculate coeffs that are represented as integrals
-            var quadratureNodes = new Segment(0, 1).GetUniformPartition(quadratureNodesCount);
-            var op = new WalshSpectralOdeOperator(quadratureNodes);
+            //var quadratureNodes = new Segment(0, 1).GetUniformPartition(quadratureNodesCount);
+            var op = new WalshSpectralOdeOperator(quadratureNodesCount);
             return op;
         }
 

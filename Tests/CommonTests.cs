@@ -54,5 +54,21 @@ namespace Tests
             Assert.AreEqual(2, k);
             Assert.AreEqual(4, i);
         }
+
+        [Test]
+        public void GetClosestPowerOf2Test()
+        {
+            var n = 10;
+            var k = Common.GetClosestPowerOf2(n);
+            Assert.That(k, Is.EqualTo(4));
+
+            n = 15;
+            k = Common.GetClosestPowerOf2(n);
+            Assert.That(k, Is.EqualTo(4));
+
+            n = 16;
+            k = Common.GetClosestPowerOf2(n);
+            Assert.That(k, Is.EqualTo(5));
+        }
     }
 }
