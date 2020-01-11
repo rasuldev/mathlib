@@ -83,6 +83,32 @@ namespace Demo
             //numSolutionPlotIter2.Refresh();
         }
 
+        void SolveWalsh(int partSumOrder, int iterCount, int nodesCount)
+        {
+            var chunksCount = (int)nupChunksCount.Value;
+            var (segment, y0, f, yExact) = ExampleDiscontinuous1();
+            var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
+            if (yExact != null)
+            {
+                //nodes = Range(0, nodesCount).Select(j => 1.0*j / nodesCount).ToArray();
+                exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => yExact(x), nodes) };
+                exactSolutionPlot.Refresh();
+            }
+            //nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / nodesCount).ToArray();
+
+            // *************** Walsh System: ***************
+            var solverIter = new WalshSpectralSolverIter(1000);
+
+
+            var problem = new CauchyProblem(f, y0, segment);
+            var df = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
+            //df.X = df.X.Select(x => x).ToArray();
+            numSolutionPlotIter.Colors = Colors;
+            numSolutionPlotIter.DiscreteFunctions = df.Select(d => d[0]).ToArray();
+            numSolutionPlotIter.Refresh();
+            //numSolutionPlotIter2.DiscreteFunctions = df[1];
+            //numSolutionPlotIter2.Refresh();
+        }
 
 
 
@@ -131,7 +157,8 @@ namespace Demo
         private void ValueChanged(object sender, EventArgs e)
         {
             //Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
-            SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
+            //SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
+            SolveWalsh((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
         }
 
 
