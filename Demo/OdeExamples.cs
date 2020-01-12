@@ -214,5 +214,42 @@ namespace Demo
             //var y0 = YExact(segment.Start);
             return (segment, y0, f, YExact);
         }
+
+        public static (Segment segment, double y0, Func<double, double, double> f, Func<double, double> yExact) ExampleDiscontinuous2()
+        {
+            //var x0 = 0d;
+            Func<double, double, double> f = (x, y) => x < 0.5 ? y : y + 1;
+            //var b = 1;
+            var y0 = 1;
+            double YExact(double x) => (x < 0.5 ? y0 * Exp(x) : (y0*Sqrt(E)+1)/Sqrt(E) * Exp(x) - 1);
+            var segment = new Segment(0, 1);
+            //var y0 = YExact(segment.Start);
+            return (segment, y0, f, YExact);
+        }
+
+        public static (Segment segment, double y0, Func<double, double, double> f, Func<double, double> yExact) ExampleDiscontinuous3()
+        {
+            //var x0 = 0d;
+            Func<double, double, double> f = (x, y) => Sign(x-0.5);
+            //var b = 1;
+            var y0 = 1;
+            double YExact(double x) => (x < 0.5 ? y0 * Exp(x) : (y0 * Sqrt(E) + 1) / Sqrt(E) * Exp(x) - 1);
+            var segment = new Segment(0, 1);
+            //var y0 = YExact(segment.Start);
+            return (segment, y0, f, YExact);
+        }
+
+        public static (Segment segment, double y0, Func<double, double, double> f, Func<double, double> yExact) ExampleDiscontinuous4()
+        {
+            var b = 5d;
+            var T = 0.5;
+            Func<double, double, double> f = (x, y) => -b*y + (1+Sign(x - T))*0.5;
+            //var b = 1;
+            var y0 = 0;
+            double YExact(double x) => (x < T ? 0 : 1/b*(1-Exp(-b*(x-T))));
+            var segment = new Segment(0, 1);
+            //var y0 = YExact(segment.Start);
+            return (segment, y0, f, YExact);
+        }
     }
 }
