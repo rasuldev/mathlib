@@ -38,6 +38,9 @@
             this.nupNodesCount = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.nupChunksCount = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbLog = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupIterCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupOrder)).BeginInit();
@@ -47,6 +50,9 @@
             // 
             // panelBottom
             // 
+            this.panelBottom.Controls.Add(this.button1);
+            this.panelBottom.Controls.Add(this.tbLog);
+            this.panelBottom.Controls.Add(this.label5);
             this.panelBottom.Controls.Add(this.label4);
             this.panelBottom.Controls.Add(this.nupChunksCount);
             this.panelBottom.Controls.Add(this.label3);
@@ -55,6 +61,8 @@
             this.panelBottom.Controls.Add(this.nupOrder);
             this.panelBottom.Controls.Add(this.label1);
             this.panelBottom.Controls.Add(this.nupIterCount);
+            this.panelBottom.Location = new System.Drawing.Point(0, 645);
+            this.panelBottom.Size = new System.Drawing.Size(1351, 123);
             this.panelBottom.Controls.SetChildIndex(this.seriesListBox, 0);
             this.panelBottom.Controls.SetChildIndex(this.nupIterCount, 0);
             this.panelBottom.Controls.SetChildIndex(this.label1, 0);
@@ -64,16 +72,19 @@
             this.panelBottom.Controls.SetChildIndex(this.label3, 0);
             this.panelBottom.Controls.SetChildIndex(this.nupChunksCount, 0);
             this.panelBottom.Controls.SetChildIndex(this.label4, 0);
+            this.panelBottom.Controls.SetChildIndex(this.label5, 0);
+            this.panelBottom.Controls.SetChildIndex(this.tbLog, 0);
+            this.panelBottom.Controls.SetChildIndex(this.button1, 0);
             // 
             // seriesListBox
             // 
-            this.seriesListBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.seriesListBox.Margin = new System.Windows.Forms.Padding(5);
             this.seriesListBox.Size = new System.Drawing.Size(532, 148);
             // 
             // nupIterCount
             // 
             this.nupIterCount.Location = new System.Drawing.Point(547, 32);
-            this.nupIterCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nupIterCount.Margin = new System.Windows.Forms.Padding(4);
             this.nupIterCount.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -123,7 +134,7 @@
             // nupOrder
             // 
             this.nupOrder.Location = new System.Drawing.Point(547, 84);
-            this.nupOrder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nupOrder.Margin = new System.Windows.Forms.Padding(4);
             this.nupOrder.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -157,7 +168,7 @@
             // nupNodesCount
             // 
             this.nupNodesCount.Location = new System.Drawing.Point(731, 32);
-            this.nupNodesCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nupNodesCount.Margin = new System.Windows.Forms.Padding(4);
             this.nupNodesCount.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -169,7 +180,7 @@
             0,
             0});
             this.nupNodesCount.Name = "nupNodesCount";
-            this.nupNodesCount.Size = new System.Drawing.Size(160, 22);
+            this.nupNodesCount.Size = new System.Drawing.Size(89, 22);
             this.nupNodesCount.TabIndex = 6;
             this.nupNodesCount.Value = new decimal(new int[] {
             1000,
@@ -203,7 +214,7 @@
             0,
             0});
             this.nupChunksCount.Name = "nupChunksCount";
-            this.nupChunksCount.Size = new System.Drawing.Size(160, 22);
+            this.nupChunksCount.Size = new System.Drawing.Size(89, 22);
             this.nupChunksCount.TabIndex = 8;
             this.nupChunksCount.Value = new decimal(new int[] {
             1,
@@ -212,12 +223,40 @@
             0});
             this.nupChunksCount.ValueChanged += new System.EventHandler(this.ValueChanged);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(828, 37);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 17);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "info";
+            // 
+            // tbLog
+            // 
+            this.tbLog.Location = new System.Drawing.Point(910, 31);
+            this.tbLog.Multiline = true;
+            this.tbLog.Name = "tbLog";
+            this.tbLog.Size = new System.Drawing.Size(414, 75);
+            this.tbLog.TabIndex = 11;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(833, 78);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(62, 28);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Batch";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // OdeSpectral
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(932, 657);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ClientSize = new System.Drawing.Size(1351, 768);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "OdeSpectral";
             this.Text = "OdeSpectral";
             this.Controls.SetChildIndex(this.panelBottom, 0);
@@ -243,5 +282,8 @@
         private System.Windows.Forms.NumericUpDown nupOrder;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown nupChunksCount;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbLog;
+        private System.Windows.Forms.Button button1;
     }
 }

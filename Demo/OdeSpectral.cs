@@ -19,6 +19,7 @@ using Steema.TeeChart.Styles;
 using static System.Math;
 using static System.Linq.Enumerable;
 using static Demo.OdeExamples;
+using System.Collections.Concurrent;
 
 namespace Demo
 {
@@ -83,9 +84,8 @@ namespace Demo
             //numSolutionPlotIter2.Refresh();
         }
 
-        void SolveWalsh(int partSumOrder, int iterCount, int nodesCount)
+        double SolveWalsh(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var chunksCount = (int)nupChunksCount.Value;
             var (segment, y0, f, yExact) = ExampleDiscontinuous4();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
@@ -108,6 +108,13 @@ namespace Demo
             numSolutionPlotIter.Refresh();
             //numSolutionPlotIter2.DiscreteFunctions = df[1];
             //numSolutionPlotIter2.Refresh();
+
+            var delta = exactSolutionPlot.DiscreteFunctions[0].Y
+                .Zip(numSolutionPlotIter.DiscreteFunctions[0].Y)
+                .Select(y => Abs(y.Item1 - y.Item2)).Max();
+
+            label5.Text = $"{delta:F5}";
+            return delta;
         }
 
 
@@ -158,10 +165,31 @@ namespace Demo
         {
             //Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
             //SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
-            SolveWalsh((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
+            var chunksCount = (int)nupChunksCount.Value;
+            SolveWalsh((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value, chunksCount);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            const int partSumOrder = 20;
+            const int nodesCount = 100;
+            tbLog.Text += $"order {partSumOrder}; nodes {nodesCount};\r\n";
+            tbLog.Text += $"iter; delta;\r\n";
+            var dict = new ConcurrentDictionary<int, double>();
+            
 
+            Parallel.For(5, 31, iter =>
+            {
+                var delta = SolveWalsh(partSumOrder, iter, nodesCount, 1);
+                dict[iter]=delta;
+            });
+
+            foreach (var item in dict.OrderBy(el => el.Key))
+            {
+                tbLog.Text += $"{item.Key}; {item.Value};\r\n";
+            }
+            
+        }
     }
 
     //public static class ArrayExts
