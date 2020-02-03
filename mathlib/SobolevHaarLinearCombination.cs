@@ -52,5 +52,52 @@ namespace mathlib
                 return FastCalc(p, x);
             };
         }
+
+        public static double[] Decomposition(Func<double, double> func, int n)
+        {
+            double[] result = new double[n];
+
+            var (k, j) = Common.Decompose(n);
+            double[] a = new double[1 << (k + 1)];
+
+            for (int i = 1; i <= a.Length / 2; i++)
+            {
+                double[] edge = new double[3];
+                double pow2k = Math.Pow(2, k);
+                double pow2k2 = Math.Pow(2, (k + 1) / 2.0);
+
+                edge[0] = (i - 1.0) / pow2k;
+                edge[1] = (2 * i - 1.0) / ((int)pow2k << 1);
+                edge[2] = i / pow2k;
+
+                a[2 * i - 2] = pow2k2 * Integrals.Rectangular(func, edge[0], edge[1], 2, Integrals.RectType.Center);
+                a[2 * i - 1] = pow2k2 * Integrals.Rectangular(func, edge[1], edge[2], 2, Integrals.RectType.Center);
+            }
+
+            double sqrt2 = Math.Sqrt(2);
+
+            for (int i = 1; i <= j; i++)
+            {
+                result[(int)Math.Pow(2, k) + i - 1] = (a[2 * i - 2] - a[2 * i - 1]) / sqrt2;
+            }
+
+            for (int i = 1; i <= Math.Pow(2, k); i++)
+            {
+                a[i - 1] = (a[2 * i - 2] + a[2 * i - 1]) / sqrt2;
+            }
+
+            for (int l = k - 1; l >= 0; l--)
+            {
+                int pow2l = (int)Math.Pow(2, l);
+                for (int i = 1; i <= pow2l; i++)
+                {
+                    result[pow2l + i - 1] = (a[2 * i - 2] - a[2 * i - 1]) / sqrt2;
+                    a[i - 1] = (a[2 * i - 2] + a[2 * i - 1]) / sqrt2;
+                }
+            }
+            result[0] = a[0];
+
+            return result;
+        }
     }
 }

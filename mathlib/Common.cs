@@ -54,8 +54,14 @@ namespace mathlib
         /// <returns></returns>
         public static (int k, int i) Decompose(int n)
         {
-            var k = (int)Math.Log(n - 1, 2);
-            var i = n - (int)Math.Pow(2, k);
+            int lengthCopy = n - 1;
+            int k = 0;
+            while (lengthCopy > 1)
+            {
+                k++;
+                lengthCopy >>= 1;
+            }
+            int i = n - (1 << k);
             return (k, i);
         }
     }
