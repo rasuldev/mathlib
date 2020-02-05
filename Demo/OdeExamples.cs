@@ -88,7 +88,7 @@ namespace Demo
             };
 
             var h = PI / 2;
-            return (new Segment(0, h), initVals, f, h, new Func<double, double>[] 
+            return (new Segment(0, h), initVals, f, h, new Func<double, double>[]
             {
                 x => Exp(x) * (2 * Sin(2 * x) + 2 * Cos(2 * x)),
                 x => Exp(x) * (1 - Cos(2 * x) + Sin(2 * x)),
@@ -221,7 +221,7 @@ namespace Demo
             Func<double, double, double> f = (x, y) => x < 0.5 ? y : y + 1;
             //var b = 1;
             var y0 = 1;
-            double YExact(double x) => (x < 0.5 ? y0 * Exp(x) : (y0*Sqrt(E)+1)/Sqrt(E) * Exp(x) - 1);
+            double YExact(double x) => (x < 0.5 ? y0 * Exp(x) : (y0 * Sqrt(E) + 1) / Sqrt(E) * Exp(x) - 1);
             var segment = new Segment(0, 1);
             //var y0 = YExact(segment.Start);
             return (segment, y0, f, YExact);
@@ -230,7 +230,7 @@ namespace Demo
         public static (Segment segment, double y0, Func<double, double, double> f, Func<double, double> yExact) ExampleDiscontinuous3()
         {
             //var x0 = 0d;
-            Func<double, double, double> f = (x, y) => Sign(x-0.5);
+            Func<double, double, double> f = (x, y) => Sign(x - 0.5);
             //var b = 1;
             var y0 = 1;
             double YExact(double x) => (x < 0.5 ? y0 * Exp(x) : (y0 * Sqrt(E) + 1) / Sqrt(E) * Exp(x) - 1);
@@ -243,10 +243,48 @@ namespace Demo
         {
             var b = 5d;
             var T = 0.5;
-            Func<double, double, double> f = (x, y) => -b*y + (1+Sign(x - T))*0.5;
+            Func<double, double, double> f = (x, y) => -b * y + (1 + Sign(x - T)) * 0.5;
             //var b = 1;
             var y0 = 0;
-            double YExact(double x) => (x < T ? 0 : 1/b*(1-Exp(-b*(x-T))));
+            double YExact(double x) => (x < T ? 0 : 1 / b * (1 - Exp(-b * (x - T))));
+            var segment = new Segment(0, 1);
+            //var y0 = YExact(segment.Start);
+            return (segment, y0, f, YExact);
+        }
+
+        public static (Segment segment, double y0, Func<double, double, double> f, Func<double, double> yExact) ExampleDiscontinuous5()
+        {
+            double finner(double x)
+            {
+                if (x > 0.25 && x < 0.75)
+                    return x;
+
+                if (x >= 0.75 && x <= 1)
+                    return 1;
+
+                return 0;
+            }
+
+            double f(double x, double y)
+            {
+                return -2 * y + finner(x);
+            }
+
+            //Func<double, double, double> f = (x, y) => -2*y + ;
+            //var b = 1;
+            var y0 = 0;
+            double YExact(double x)
+            {
+                if (x < 0.25) return 0;
+                if (x < 0.75) return 0.5 * (x + 0.25 * Exp(0.5 - 2 * x) - 0.5);
+                return 0.5+Exp(0.5-2*x)*(-3*E + 1)/8;
+            }
+
+            double YExact2(double x)
+            {
+                return Exp(-2*x)*Integrals.Trapezoid(t => Exp(2 * t) * finner(t), 0, x, 1000);
+            }
+
             var segment = new Segment(0, 1);
             //var y0 = YExact(segment.Start);
             return (segment, y0, f, YExact);

@@ -86,7 +86,7 @@ namespace Demo
 
         double SolveWalsh(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var (segment, y0, f, yExact) = ExampleDiscontinuous4();
+            var (segment, y0, f, yExact) = ExampleDiscontinuous5();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
