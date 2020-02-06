@@ -86,7 +86,7 @@ namespace Demo
 
         double SolveWalsh(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var (segment, y0, f, yExact) = ExampleDiscontinuous5();
+            var (segment, y0, f, yExact) = ExampleDiscontinuous4();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
@@ -171,33 +171,42 @@ namespace Demo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            const int partSumOrder = 20;
-            const int nodesCount = 100;
-            tbLog.Text += $"order {partSumOrder}; nodes {nodesCount};\r\n";
-            tbLog.Text += $"iter; delta;\r\n";
-            var dict = new ConcurrentDictionary<int, double>();
-            
+            //tbLog.Text += $"order {partSumOrder}; nodes {nodesCount};\r\n";
+            //tbLog.Text += $"iter; delta;\r\n";
+        }
 
-            Parallel.For(5, 31, iter =>
+        private void RunExperiment(int partSumOrder, int startIter, int endIter)
+        {
+            const int nodesCount = 100;
+
+            var dict = new ConcurrentDictionary<int, double>();
+            Parallel.For(startIter, endIter, iter =>
             {
                 var delta = SolveWalsh(partSumOrder, iter, nodesCount, 1);
-                dict[iter]=delta;
+                dict[iter] = delta;
             });
 
             foreach (var item in dict.OrderBy(el => el.Key))
             {
                 tbLog.Text += $"{item.Key}; {item.Value};\r\n";
             }
-            
         }
     }
 
-    //public static class ArrayExts
-    //{
-    //    public static void Deconstruct(this double[] arr, params out double[] x)
-    //    {
-    //        x = arr[0];
-    //        y = arr[1];
-    //    }
-    //}
+
+    public class Experiment
+    {
+        public int Order { get; set; }
+        public int IterationsCount { get; set; }
+        public double Delta { get; set; }
+
+        public Experiment(int order, int iterationsCount, double delta)
+        {
+            Order = order;
+            IterationsCount = iterationsCount;
+            Delta = delta;
+        }
+    }
+
+
 }
