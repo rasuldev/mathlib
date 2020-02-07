@@ -53,7 +53,7 @@ namespace mathlib.DiffEq
         /// <param name="initialCoeffs">Initial point for iteration method. It size should be equationsCount x partialSumOrder</param>
         /// <param name="nodes">Calculated approximate solution is discretized on nodes. Nodes should be inside orthogonality segment</param>
         /// <returns>Approximate solution on nodes</returns>
-        protected DiscreteFunction2D[] SolveOnOrthogonalitySegment(DynFunc<double>[] rightSides, double[] initialValues, 
+        protected (IEnumerable<DiscreteFunction2D> solution, double[][] solutionCoeffs) SolveOnOrthogonalitySegment(DynFunc<double>[] rightSides, double[] initialValues, 
             int iterCount, double[][] initialCoeffs, double[] nodes)
         {
             if (initialCoeffs.Length != rightSides.Length)
@@ -64,14 +64,14 @@ namespace mathlib.DiffEq
 
             _spectralOdeOperator.SetParams(rightSides, initialValues, partialSumOrder);
             var result = FixedPointIteration.FindFixedPoint(c => _spectralOdeOperator.GetValue(c), initialCoeffs, iterCount);
-            return result.Select((coeffs, j) => 
+            return (result.Select((coeffs, j) => 
                             new DiscreteFunction2D(
                                 nodes,
-                                _ift.Transform(new[] { initialValues[j] }.Concat(coeffs).ToArray(), nodes)))
-                        .ToArray();
+                                _ift.Transform(new[] { initialValues[j] }.Concat(coeffs).ToArray(), nodes))),
+                    result);
         }
 
-        protected DiscreteFunction2D[] SolveOnOrthogonalitySegment(DynFunc<double>[] rightSides, double[] initialValues, 
+        protected (IEnumerable<DiscreteFunction2D> solution, double[][] solutionCoeffs) SolveOnOrthogonalitySegment(DynFunc<double>[] rightSides, double[] initialValues, 
             int partialSumOrder, int iterCount, double[] nodes)
         {
             var initialCoeffs = GenerateInitialCoeffs(rightSides.Length, partialSumOrder);
@@ -86,7 +86,8 @@ namespace mathlib.DiffEq
         /// <param name="iterCount"></param>
         /// <param name="nodes">Nodes should be inside problem segment</param>
         /// <returns></returns>
-        public DiscreteFunction2D[] Solve(CauchyProblem problem, int partialSumOrder, int iterCount, double[] nodes)
+        public (IEnumerable<DiscreteFunction2D> solution, double[][] solutionCoeffs) SolveWithCoeffs(CauchyProblem problem, 
+            int partialSumOrder, int iterCount, double[] nodes)
         {
             // To apply iter method we should linear transform problem segment to orthogonality segment.
             // Let's denote orthogonality segment by [a0,b0] and problem segment by [a,b]. 
@@ -112,14 +113,17 @@ namespace mathlib.DiffEq
                 })).ToArray();
 
             
-            var dfs = SolveOnOrthogonalitySegment(transformedRightSides, problem.InitialValues, 
+            var result = SolveOnOrthogonalitySegment(transformedRightSides, problem.InitialValues, 
                 partialSumOrder, iterCount, nodes.Select(x => (x - a) / h + a0).ToArray());
 
-            // dfs is defined on [a0,b0] and we should transform it to [a,b]
-            return dfs.Select(df =>
-                new DiscreteFunction2D(df.X.Select(x => h * (x - a0) + a).ToArray(),
-                                       df.Y)).ToArray();
+            // result.solution is defined on [a0,b0] and we should transform it to [a,b]
+            return (result.solution.Select(df => new DiscreteFunction2D(df.X.Select(x => h * (x - a0) + a).ToArray(), df.Y)), 
+                    result.solutionCoeffs);
         }
+
+        public DiscreteFunction2D[] Solve(CauchyProblem problem, int partialSumOrder, int iterCount, double[] nodes) =>
+            SolveWithCoeffs(problem, partialSumOrder, iterCount, nodes).solution.ToArray();
+
 
         public List<DiscreteFunction2D[]> Solve(CauchyProblem problem, int chunksCount, 
             int partialSumOrder, int iterCount, int chunkNodesCount)

@@ -86,7 +86,7 @@ namespace Demo
 
         double SolveWalsh(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var (segment, y0, f, yExact) = ExampleDiscontinuous6();
+            var (segment, y0, f, yExact) = ExampleDiscontinuous5();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
@@ -98,13 +98,31 @@ namespace Demo
 
             // *************** Walsh System: ***************
             var solverIter = new WalshSpectralSolverIter(1000);
-
-
             var problem = new CauchyProblem(f, y0, segment);
-            var df = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
+
+            if (chunksCount == 1)
+            {
+                var result = solverIter.SolveWithCoeffs(problem, partSumOrder, iterCount, new Segment(0, 1).GetUniformPartition(nodesCount));
+                
+                numSolutionPlotIter.Colors = Colors;
+                numSolutionPlotIter.DiscreteFunctions = result.solution.ToArray(); 
+                numSolutionPlotIter.Refresh();
+
+                Func<double, double> yEst = x => y0 + SobolevWalshLinearCombination.Calc(result.solutionCoeffs[0].ToArray(), x);
+                Func<double, double> derivOfyEst = x => WalshLinearCombination.Calc(result.solutionCoeffs[0], x);
+                exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => f.Invoke(x, yEst(x)), nodes) };
+                exactSolutionPlot.Refresh();
+                numSolutionPlotIter.DiscreteFunctions = new[] { new DiscreteFunction2D(derivOfyEst, nodes) };
+                numSolutionPlotIter.Refresh();
+                var nev = nodes.Select(xj => Abs(derivOfyEst(xj) - f.Invoke(xj, yEst(xj)))).Take(nodes.Length - 1).Max();
+                label5.Text = $"{nev:F5}";
+                return nev;
+            }
+
+            var dfs = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
             //df.X = df.X.Select(x => x).ToArray();
             numSolutionPlotIter.Colors = Colors;
-            numSolutionPlotIter.DiscreteFunctions = df.Select(d => d[0]).ToArray();
+            numSolutionPlotIter.DiscreteFunctions = dfs.Select(d => d[0]).ToArray();
             numSolutionPlotIter.Refresh();
             //numSolutionPlotIter2.DiscreteFunctions = df[1];
             //numSolutionPlotIter2.Refresh();
