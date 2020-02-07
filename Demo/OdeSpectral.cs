@@ -86,7 +86,7 @@ namespace Demo
 
         double SolveWalsh(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var (segment, y0, f, yExact) = ExampleDiscontinuous4();
+            var (segment, y0, f, yExact) = ExampleDiscontinuous6();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
@@ -171,36 +171,49 @@ namespace Demo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //tbLog.Text += $"order {partSumOrder}; nodes {nodesCount};\r\n";
-            //tbLog.Text += $"iter; delta;\r\n";
+            const int partSumOrder = 20;
+            tbLog.Text += $"order {partSumOrder};\r\n";
+            tbLog.Text += $"iter; delta;\r\n";
+            var experimentResults = new List<ExperimentResult>();
+            //experimentResults.AddRange(RunExperiment(partSumOrder, 5, 30));
+            //experimentResults.AddRange(RunExperiment(15, 5, 30));
+            //experimentResults.AddRange(RunExperiment(20, 5, 30));
+            tbLog.Text += ToString(experimentResults);
         }
 
-        private void RunExperiment(int partSumOrder, int startIter, int endIter)
+        private string ToString(IEnumerable<ExperimentResult> results)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var r in results.OrderBy(x => x.IterationsCount))
+            {
+                sb.AppendLine($"{r.IterationsCount};{r.Delta};");
+            }
+
+            return sb.ToString();
+        }
+
+        private IEnumerable<ExperimentResult> RunExperiment(int partSumOrder, int startIter, int endIter)
         {
             const int nodesCount = 100;
 
             var dict = new ConcurrentDictionary<int, double>();
-            Parallel.For(startIter, endIter, iter =>
+            Parallel.For(startIter, endIter+1, iter =>
             {
                 var delta = SolveWalsh(partSumOrder, iter, nodesCount, 1);
                 dict[iter] = delta;
             });
-
-            foreach (var item in dict.OrderBy(el => el.Key))
-            {
-                tbLog.Text += $"{item.Key}; {item.Value};\r\n";
-            }
+            return dict.Select(i => new ExperimentResult(partSumOrder, i.Key, i.Value));
         }
     }
 
 
-    public class Experiment
+    public class ExperimentResult
     {
         public int Order { get; set; }
         public int IterationsCount { get; set; }
         public double Delta { get; set; }
-
-        public Experiment(int order, int iterationsCount, double delta)
+        public ExperimentResult(int order, int iterationsCount, double delta)
         {
             Order = order;
             IterationsCount = iterationsCount;

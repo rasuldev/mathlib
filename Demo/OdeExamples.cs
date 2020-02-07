@@ -289,5 +289,22 @@ namespace Demo
             //var y0 = YExact(segment.Start);
             return (segment, y0, f, YExact);
         }
+
+        public static (Segment segment, double y0, Func<double, double, double> f, Func<double, double> yExact) ExampleDiscontinuous6()
+        {
+            double f(double x, double y)
+            {
+                return -2 * y * y + Sign(x-0.5);
+            }
+            
+            var y0 = 0;
+            double YExact(double x)
+            {
+                return 1;
+            }
+
+            var segment = new Segment(0, 1);
+            return (segment, y0, f, YExact);
+        }
     }
 }
