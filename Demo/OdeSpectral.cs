@@ -86,7 +86,7 @@ namespace Demo
 
         double SolveWalsh(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var (segment, y0, f, yExact) = ExampleDiscontinuous5();
+            var (segment, y0, f, yExact) = ExampleDiscontinuous6();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
@@ -100,24 +100,24 @@ namespace Demo
             var solverIter = new WalshSpectralSolverIter(1000);
             var problem = new CauchyProblem(f, y0, segment);
 
-            if (chunksCount == 1)
-            {
-                var result = solverIter.SolveWithCoeffs(problem, partSumOrder, iterCount, new Segment(0, 1).GetUniformPartition(nodesCount));
+            //if (chunksCount == 1)
+            //{
+            //    var result = solverIter.SolveWithCoeffs(problem, partSumOrder, iterCount, new Segment(0, 1).GetUniformPartition(nodesCount));
                 
-                numSolutionPlotIter.Colors = Colors;
-                numSolutionPlotIter.DiscreteFunctions = result.solution.ToArray(); 
-                numSolutionPlotIter.Refresh();
+            //    numSolutionPlotIter.Colors = Colors;
+            //    numSolutionPlotIter.DiscreteFunctions = result.solution.ToArray(); 
+            //    numSolutionPlotIter.Refresh();
 
-                Func<double, double> yEst = x => y0 + SobolevWalshLinearCombination.Calc(result.solutionCoeffs[0].ToArray(), x);
-                Func<double, double> derivOfyEst = x => WalshLinearCombination.Calc(result.solutionCoeffs[0], x);
-                exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => f.Invoke(x, yEst(x)), nodes) };
-                exactSolutionPlot.Refresh();
-                numSolutionPlotIter.DiscreteFunctions = new[] { new DiscreteFunction2D(derivOfyEst, nodes) };
-                numSolutionPlotIter.Refresh();
-                var nev = nodes.Select(xj => Abs(derivOfyEst(xj) - f.Invoke(xj, yEst(xj)))).Take(nodes.Length - 1).Max();
-                label5.Text = $"{nev:F5}";
-                return nev;
-            }
+            //    Func<double, double> yEst = x => y0 + SobolevWalshLinearCombination.Calc(result.solutionCoeffs[0].ToArray(), x);
+            //    Func<double, double> derivOfyEst = x => WalshLinearCombination.Calc(result.solutionCoeffs[0], x);
+            //    exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => f.Invoke(x, yEst(x)), nodes) };
+            //    exactSolutionPlot.Refresh();
+            //    numSolutionPlotIter.DiscreteFunctions = new[] { new DiscreteFunction2D(derivOfyEst, nodes) };
+            //    numSolutionPlotIter.Refresh();
+            //    var nev = nodes.Select(xj => Abs(derivOfyEst(xj) - f.Invoke(xj, yEst(xj)))).Take(nodes.Length - 1).Max();
+            //    label5.Text = $"{nev:F5}";
+            //    return nev;
+            //}
 
             var dfs = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
             //df.X = df.X.Select(x => x).ToArray();
@@ -189,11 +189,11 @@ namespace Demo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            const int partSumOrder = 20;
+            const int partSumOrder = 10;
             tbLog.Text += $"order {partSumOrder};\r\n";
             tbLog.Text += $"iter; delta;\r\n";
             var experimentResults = new List<ExperimentResult>();
-            //experimentResults.AddRange(RunExperiment(partSumOrder, 5, 30));
+            experimentResults.AddRange(RunExperiment(partSumOrder, 1, 30));
             //experimentResults.AddRange(RunExperiment(15, 5, 30));
             //experimentResults.AddRange(RunExperiment(20, 5, 30));
             tbLog.Text += ToString(experimentResults);

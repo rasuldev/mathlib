@@ -277,12 +277,12 @@ namespace Demo
             {
                 if (x < 0.25) return 0;
                 if (x < 0.75) return 0.5 * (x + 0.25 * Exp(0.5 - 2 * x) - 0.5);
-                return 0.5+Exp(0.5-2*x)*(-3*E + 1)/8;
+                return 0.5 + Exp(0.5 - 2 * x) * (-3 * E + 1) / 8;
             }
 
             double YExact2(double x)
             {
-                return Exp(-2*x)*Integrals.Trapezoid(t => Exp(2 * t) * finner(t), 0, x, 1000);
+                return Exp(-2 * x) * Integrals.Trapezoid(t => Exp(2 * t) * finner(t), 0, x, 1000);
             }
 
             var segment = new Segment(0, 1);
@@ -294,13 +294,16 @@ namespace Demo
         {
             double f(double x, double y)
             {
-                return -2 * y * y + Sign(x-0.5);
+                if (x < 0.5)
+                    return y - y * y + Exp(2 * x);
+                return 1 + y * (x - 0.5 + Sqrt(E)) - y * y;
             }
-            
-            var y0 = 0;
+
+            var y0 = 1;
             double YExact(double x)
             {
-                return 1;
+                if (x < 0.5) return Exp(x);
+                return x - 0.5 + Sqrt(E);
             }
 
             var segment = new Segment(0, 1);
