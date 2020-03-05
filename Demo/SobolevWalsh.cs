@@ -49,7 +49,7 @@ namespace Demo
             //    new DiscreteFunction2D(WalshSobolev.Get(n), 0, 1, 1024);
             //_plot.Refresh();
             _plot2.DiscreteFunction =
-               new DiscreteFunction2D(WalshSobolev.Get2(n), 0, 1, 1024);
+               new DiscreteFunction2D(WalshSobolev.Get(2, n), 0, 1, 1024);
             _plot2.Refresh();
 
             //_plot.DiscreteFunction = new DiscreteFunction2D(x => W12(Math.Pow(2, n) * x) / Math.Pow(2, n), 0, 1, 1024 * 64);
