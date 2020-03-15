@@ -6,3 +6,4 @@
 *packages/*
 !*packages/*.config
 .vs/
+*.nupkg

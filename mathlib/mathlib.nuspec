@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>omi.mathlib</id>
+    <version>1.0.1-alpha</version>
+    <title>Mathematical lib</title>
+    <authors>rasuldev@gmail.com</authors>
+    <owners>rasuldev@gmail.com</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <description>Math</description>
+    <copyright>Copyright 2020</copyright>
+    <tags>Numerical methods</tags>
+  </metadata>
+</package>
