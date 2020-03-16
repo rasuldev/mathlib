@@ -30,9 +30,10 @@ namespace mathlib.Functions
 
             var nodesCount = (int)Math.Pow(2, (int)Math.Ceiling(Math.Log(n, 2)) + 6);
             var nodes = Enumerable.Range(0, nodesCount).Select(j => j * 1.0 / nodesCount);
+            var walsh_nMinusr = Walsh.Get(n - r);
             double Sobolev(double x)
             {
-                return Integrals.Rectangular(t => Pow(x - t, r - 1) * Walsh.Get(n - r)(t), nodes.Where(node => node <= x).ToArray(),
+                return Integrals.Rectangular(t => Pow(x - t, r - 1) * walsh_nMinusr(t), nodes.Where(node => node <= x).ToArray(),
                     Integrals.RectType.Center);
             }
             return Sobolev;
