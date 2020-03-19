@@ -48,21 +48,30 @@ namespace Demo
             //_plot.DiscreteFunction =
             //    new DiscreteFunction2D(WalshSobolev.Get(n), 0, 1, 1024);
             //_plot.Refresh();
-            var wrn = WalshSobolev.Get(3, 3 + n);
-            var wrn05 = wrn(0.5);
+            var r = 2;
+            var wrn = WalshSobolev.Get(r, r + n);
+            var wrnp1 = WalshSobolev.Get(r, r + 2*n+1);
+
+            for (int i = 0; i < 100; i++)
+            {
+                var w05 = WalshSobolev.Get(r, r + i)(0.5);
+                tbLog.AppendText($"{i}; {w05:F10}\r\n");
+            }
+            //var wrn05 = wrn(0.5);
             _plot.DiscreteFunction =
-                //new DiscreteFunction2D(wrn, 0, 1, 1024);
-                new DiscreteFunction2D(x => wrn(0.5 + x) - wrn05, 0, 0.5, 1024);
-               //new DiscreteFunction2D(Walsh.Get(n), 0, 1, 1024);
+                new DiscreteFunction2D(wrn, 0, 1, 1024);
+            //new DiscreteFunction2D(x => wrn(0.5 + x) - wrn05, 0, 0.5, 1024);
+            //new DiscreteFunction2D(Walsh.Get(n), 0, 1, 1024);
             _plot.Refresh();
 
             _plot2.DiscreteFunction =
-               new DiscreteFunction2D(x => wrn(0.5 - x) - wrn05, 0, 0.5, 1024);
+                new DiscreteFunction2D(Walsh.Get(n), 0, 1, 1024);
+            //new DiscreteFunction2D(x => wrn(0.5 - x) - wrn05, 0, 0.5, 1024);
             _plot2.Refresh();
 
-            _plot3.DiscreteFunction =
-               new DiscreteFunction2D(x => -(wrn(0.5 - x) - wrn05), 0, 0.5, 1024);
-            _plot3.Refresh();
+            //_plot3.DiscreteFunction =
+            //   new DiscreteFunction2D(x => -(wrn(0.5 - x) - wrn05), 0, 0.5, 1024);
+            //_plot3.Refresh();
 
             //_plot.DiscreteFunction = new DiscreteFunction2D(x => W12(Math.Pow(2, n) * x) / Math.Pow(2, n), 0, 1, 1024 * 64);
             //_plot.Refresh();
@@ -113,9 +122,7 @@ namespace Demo
                 }
                 return s;
             }
-
             return SumOfn;
-
         }
 
         private DiscreteFunction2D MaxOfS2k(int n)
@@ -160,7 +167,6 @@ namespace Demo
 
         private Func<double, double> SumOfAbs(int n)
         {
-
             double SumOfn(double x)
             {
                 var s = 0d;
@@ -170,9 +176,7 @@ namespace Demo
                 }
                 return s;
             }
-
             return SumOfn;
-
         }
     }
 }
