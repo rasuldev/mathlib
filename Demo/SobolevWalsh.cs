@@ -49,14 +49,14 @@ namespace Demo
             //    new DiscreteFunction2D(WalshSobolev.Get(n), 0, 1, 1024);
             //_plot.Refresh();
             var r = 2;
-            var wrn = WalshSobolev.Get(r, r + n);
-            var wrnp1 = WalshSobolev.Get(r, r + 2*n+1);
+            var wrn = WalshSobolev.Get(r, r + pow2);
+            var wrnp1 = WalshSobolev.Get(r, r + n);
 
-            for (int i = 0; i < 100; i++)
-            {
-                var w05 = WalshSobolev.Get(r, r + i)(0.5);
-                tbLog.AppendText($"{i}; {w05:F10}\r\n");
-            }
+            //for (int i = 0; i < 300; i++)
+            //{
+            //    var w1 = WalshSobolev.Get(r, r + i)(1);
+            //    tbLog.AppendText($"{i}; {w1:F10}\r\n");
+            //}
             //var wrn05 = wrn(0.5);
             _plot.DiscreteFunction =
                 new DiscreteFunction2D(wrn, 0, 1, 1024);
@@ -65,7 +65,7 @@ namespace Demo
             _plot.Refresh();
 
             _plot2.DiscreteFunction =
-                new DiscreteFunction2D(Walsh.Get(n), 0, 1, 1024);
+                new DiscreteFunction2D(wrnp1, 0, 1, 1024);
             //new DiscreteFunction2D(x => wrn(0.5 - x) - wrn05, 0, 0.5, 1024);
             _plot2.Refresh();
 

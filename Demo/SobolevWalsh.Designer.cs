@@ -36,12 +36,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.nupNum)).BeginInit();
             this.SuspendLayout();
             // 
+            // panelMain
+            // 
+            this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelMain.Size = new System.Drawing.Size(1336, 601);
+            // 
             // panelBottom
             // 
             this.panelBottom.Controls.Add(this.tbLog);
             this.panelBottom.Controls.Add(this.nupNum);
-            this.panelBottom.Location = new System.Drawing.Point(0, 544);
-            this.panelBottom.Size = new System.Drawing.Size(1097, 123);
+            this.panelBottom.Location = new System.Drawing.Point(0, 627);
+            this.panelBottom.Size = new System.Drawing.Size(1336, 123);
             this.panelBottom.Controls.SetChildIndex(this.seriesListBox, 0);
             this.panelBottom.Controls.SetChildIndex(this.nupNum, 0);
             this.panelBottom.Controls.SetChildIndex(this.tbLog, 0);
@@ -81,9 +89,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 667);
+            this.ClientSize = new System.Drawing.Size(1336, 750);
             this.Name = "SobolevWalsh";
             this.Text = "SobolevWalsh";
+            this.Controls.SetChildIndex(this.panelMain, 0);
             this.Controls.SetChildIndex(this.panelBottom, 0);
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
