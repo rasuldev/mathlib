@@ -53,7 +53,12 @@ namespace Demo
                 exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => yExact(x), nodes) };
                 exactSolutionPlot.Refresh();
             }
-            var solverIter = new HaarSpectralSolverIter(1000);
+
+            var legendreSystem = new CosSystem();
+            var sobLegendreSystem = new SobolevCosSystem();
+            var solverIter = new SobolevSpectralSolverIter(1000, legendreSystem, sobLegendreSystem);
+
+            //var solverIter = new HaarSpectralSolverIter(1000);
 
             // *************** Chebyshev 1 MF System:  ***************
             //var cheb1SystemMF = new Cheb1SystemMF_rec();
@@ -127,10 +132,9 @@ namespace Demo
 
         private void ValueChanged(object sender, EventArgs e)
         {
-            //Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
-            //SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
             var chunksCount = (int)nupChunksCount.Value;
             Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value, chunksCount);
+            //SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
         }
 
         private void button1_Click(object sender, EventArgs e)

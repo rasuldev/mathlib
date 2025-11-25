@@ -142,11 +142,6 @@ namespace mathlib
 
     }
 
-
-
- 
-
-
     /// <summary>
     /// Sobolev orthogonal polynomials, associated with Chebyshev polynomials 
     /// orthonormal on (-1,1) with weight \mu(x)=\frac2\pi(1-x^2)^{-\frac12}
@@ -258,7 +253,33 @@ namespace mathlib
 
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class LegendreSystem : IFunctionsSystem
+    {
+        public Segment OrthogonalitySegment => new Segment(-1, 1);
 
+        public RealFunction Get(int k)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<double> GetValuesOnNet(int k, double[] nodes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RealFunction GetWeighted(int k)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<double> GetWeightedValuesOnNet(int k, double[] nodes)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 
 
