@@ -44,9 +44,8 @@ namespace Demo
 
 
 
-        void Solve(int partSumOrder, int iterCount, int nodesCount)
+        double Solve(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var chunksCount = (int)nupChunksCount.Value;
             var (segment, y0, f, yExact) = Example3();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
@@ -54,15 +53,6 @@ namespace Demo
                 exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => yExact(x), nodes) };
                 exactSolutionPlot.Refresh();
             }
-            //nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / nodesCount).ToArray();
-
-            // *************** Cos System: ***************
-            /*var cosSystem = new CosSystem();
-            var sobCosSystem = new SobolevCosSystem();
-            var solverIter = new SobolevSpectralSolverIter(1000, cosSystem, sobCosSystem);*/
-            //var solverIter = new CosSpectralSolverIter(1000);
-
-            // *************** Haar System: ***************
             var solverIter = new HaarSpectralSolverIter(1000);
 
             // *************** Chebyshev 1 MF System:  ***************
@@ -81,59 +71,16 @@ namespace Demo
             numSolutionPlotIter.Refresh();
             //numSolutionPlotIter2.DiscreteFunctions = df[1];
             //numSolutionPlotIter2.Refresh();
-        }
-
-        double SolveWalsh(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
-        {
-            var (segment, y0, f, yExact) = ExampleDiscontinuous6();
-            var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
-            if (yExact != null)
-            {
-                //nodes = Range(0, nodesCount).Select(j => 1.0*j / nodesCount).ToArray();
-                exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => yExact(x), nodes) };
-                exactSolutionPlot.Refresh();
-            }
-            //nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / nodesCount).ToArray();
-
-            // *************** Walsh System: ***************
-            var solverIter = new WalshSpectralSolverIter(1000);
-            var problem = new CauchyProblem(f, y0, segment);
-
-            //if (chunksCount == 1)
-            //{
-            //    var result = solverIter.SolveWithCoeffs(problem, partSumOrder, iterCount, new Segment(0, 1).GetUniformPartition(nodesCount));
-                
-            //    numSolutionPlotIter.Colors = Colors;
-            //    numSolutionPlotIter.DiscreteFunctions = result.solution.ToArray(); 
-            //    numSolutionPlotIter.Refresh();
-
-            //    Func<double, double> yEst = x => y0 + SobolevWalshLinearCombination.Calc(result.solutionCoeffs[0].ToArray(), x);
-            //    Func<double, double> derivOfyEst = x => WalshLinearCombination.Calc(result.solutionCoeffs[0], x);
-            //    exactSolutionPlot.DiscreteFunctions = new[] { new DiscreteFunction2D(x => f.Invoke(x, yEst(x)), nodes) };
-            //    exactSolutionPlot.Refresh();
-            //    numSolutionPlotIter.DiscreteFunctions = new[] { new DiscreteFunction2D(derivOfyEst, nodes) };
-            //    numSolutionPlotIter.Refresh();
-            //    var nev = nodes.Select(xj => Abs(derivOfyEst(xj) - f.Invoke(xj, yEst(xj)))).Take(nodes.Length - 1).Max();
-            //    label5.Text = $"{nev:F5}";
-            //    return nev;
-            //}
-
-            var dfs = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
-            //df.X = df.X.Select(x => x).ToArray();
-            numSolutionPlotIter.Colors = Colors;
-            numSolutionPlotIter.DiscreteFunctions = dfs.Select(d => d[0]).ToArray();
-            numSolutionPlotIter.Refresh();
-            //numSolutionPlotIter2.DiscreteFunctions = df[1];
-            //numSolutionPlotIter2.Refresh();
 
             var delta = exactSolutionPlot.DiscreteFunctions[0].Y
-                .Zip(numSolutionPlotIter.DiscreteFunctions[0].Y)
-                .Select(y => Abs(y.Item1 - y.Item2)).Max();
+               .Zip(numSolutionPlotIter.DiscreteFunctions[0].Y)
+               .Select(y => Abs(y.Item1 - y.Item2)).Max();
 
             label5.Text = $"{delta:F5}";
             return delta;
         }
 
+        
 
 
 
@@ -183,7 +130,7 @@ namespace Demo
             //Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
             //SolveSystem((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value);
             var chunksCount = (int)nupChunksCount.Value;
-            SolveWalsh((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value, chunksCount);
+            Solve((int)nupOrder.Value, (int)nupIterCount.Value, (int)nupNodesCount.Value, chunksCount);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -217,26 +164,10 @@ namespace Demo
             var dict = new ConcurrentDictionary<int, double>();
             Parallel.For(startIter, endIter+1, iter =>
             {
-                var delta = SolveWalsh(partSumOrder, iter, nodesCount, 1);
+                var delta = Solve(partSumOrder, iter, nodesCount, 1);
                 dict[iter] = delta;
             });
             return dict.Select(i => new ExperimentResult(partSumOrder, i.Key, i.Value));
         }
     }
-
-
-    public class ExperimentResult
-    {
-        public int Order { get; set; }
-        public int IterationsCount { get; set; }
-        public double Delta { get; set; }
-        public ExperimentResult(int order, int iterationsCount, double delta)
-        {
-            Order = order;
-            IterationsCount = iterationsCount;
-            Delta = delta;
-        }
-    }
-
-
 }

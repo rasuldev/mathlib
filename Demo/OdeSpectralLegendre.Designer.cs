@@ -1,6 +1,6 @@
 ﻿namespace Demo
 {
-    partial class OdeSpectral
+    partial class OdeSpectralLegendre
     {
         /// <summary>
         /// Required designer variable.
