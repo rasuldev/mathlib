@@ -85,6 +85,7 @@
     <Compile Include="OrthogonalSystem.cs" />
     <Compile Include="Polynomials\Laguerre.cs" />
     <Compile Include="Polynomials\LaguerreSobolev.cs" />
+    <Compile Include="Polynomials\Tcheb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScalarMul.cs" />
     <Compile Include="Segment.cs" />

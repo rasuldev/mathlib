@@ -22,8 +22,8 @@ namespace Demo
         private readonly Plot2D _plot = new Plot2D("Original");
         private readonly Plot2D _plot2 = new Plot2D("Sobolev-Walsh partial sum r=1");
         //Func<double, double> f = x => Pow(x-0.5,2)+0.5*x;
-        Func<double, double> f = x => Pow(x,3);
-        //Func<double, double> f = x => Sin(6 * PI * x) + x;
+        //Func<double, double> f = x => Pow(x,3);
+        Func<double, double> f = x => Sin(6 * PI * x) + x;
         Func<double, double> df = x => 6 * PI * Cos(6 * PI * x) + 1; // df = f'
         public SobolevWalshPartSumExample()
         {
