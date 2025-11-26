@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +50,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,17 +61,25 @@
   <ItemGroup>
     <Compile Include="Binomial.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DiffEq\WalshSpectralOdeOperator.cs" />
+    <Compile Include="DiffEq\HaarSpectralOdeOperator.cs" />
+    <Compile Include="DiffEq\HaarSpectralSolverIter.cs" />
+    <Compile Include="DiffEq\SobolevSpectralOdeOperator.cs" />
     <Compile Include="DiffEq\CosSpectralOdeOperator.cs" />
     <Compile Include="DiffEq\CauchyProblem.cs" />
+    <Compile Include="DiffEq\SobolevSpectralSolverIter.cs" />
     <Compile Include="DiffEq\Solver.cs" />
     <Compile Include="ChebRobustCalc.cs" />
     <Compile Include="DiffEq\CosSpectralSolverIter.cs" />
     <Compile Include="DiffEq\SpectralSolverIterBase.cs" />
+    <Compile Include="DiffEq\WalshSpectralSolverIter.cs" />
     <Compile Include="DynFunc.cs" />
     <Compile Include="FixedPointIteration.cs" />
     <Compile Include="FourierDiscretePartialSum.cs" />
     <Compile Include="FourierSobolevHaar.cs" />
     <Compile Include="FourierWalsh.cs" />
+    <Compile Include="OrthogonalWeight.cs" />
+    <Compile Include="OrthogonalWeights.cs" />
     <Compile Include="FunctionsSystem.cs" />
     <Compile Include="Functions\Rademacher.cs" />
     <Compile Include="Functions\Walsh.cs" />
@@ -85,9 +96,12 @@
     <Compile Include="Polynomials\Jacobi.cs" />
     <Compile Include="Polynomials\Laguerre.cs" />
     <Compile Include="Polynomials\LaguerreSobolev.cs" />
+    <Compile Include="Polynomials\Tcheb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScalarMul.cs" />
     <Compile Include="Segment.cs" />
+    <Compile Include="WalshLinearCombination.cs" />
+    <Compile Include="SobolevWalshLinearCombination.cs" />
     <Compile Include="SobolevHaarLinearCombination.cs" />
     <Compile Include="Symbolic\Integral.cs" />
   </ItemGroup>
@@ -97,6 +111,24 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Endless">
+      <Version>0.7.0-alpha1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+      <Version>2.9.8</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="morelinq">
+      <Version>3.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="NuGet.Build.Tasks.Pack">
+      <Version>5.5.0-preview.2.6382</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,7 +17,9 @@ namespace Demo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new JacobiForm());
-            Application.Run(new WalshForm());
+            //Application.Run(new SobolevWalshPartSumExample());
+            //Application.Run(new TchebForm());
+            Application.Run(new OdeSpectralLegendre());
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Demo
         {
             InitializeComponent();
             new ODE().Show();
+            //new OdeSpectral().Show();
         }
     }
 }

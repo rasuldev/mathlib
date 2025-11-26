@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using static System.Math;
 
 namespace mathlib.Functions
 {
@@ -19,6 +20,22 @@ namespace mathlib.Functions
                     Integrals.RectType.Center);
             }
 
+            return Sobolev;
+        }
+
+        public static Func<double, double> Get(int r, int n)
+        {
+            if (n < r)
+                return x => Pow(x, n) / Common.Factorial(n);
+
+            var nodesCount = (int)Math.Pow(2, (int)Math.Ceiling(Math.Log(n, 2)) + 6);
+            var nodes = Enumerable.Range(0, nodesCount).Select(j => j * 1.0 / nodesCount);
+            var walsh_nMinusr = Walsh.Get(n - r);
+            double Sobolev(double x)
+            {
+                return Integrals.Rectangular(t => Pow(x - t, r - 1) * walsh_nMinusr(t), nodes.Where(node => node <= x).ToArray(),
+                    Integrals.RectType.Center);
+            }
             return Sobolev;
         }
 

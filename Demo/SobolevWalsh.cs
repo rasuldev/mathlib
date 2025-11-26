@@ -20,9 +20,9 @@ namespace Demo
 {
     public partial class SobolevWalsh : GraphBuilder2DForm
     {
-        private readonly Plot2D _plot = new Plot2D("Walsh - Sobolev");
-        private readonly Plot2D _plot2 = new Plot2D("Walsh - Sobolev - 2^k");
-        private readonly Plot2D _plot3 = new Plot2D("Sum");
+        private readonly Plot2D _plot = new Plot2D("wrn(0.5+x)-0.5");
+        private readonly Plot2D _plot2 = new Plot2D("wrn(0.5-x)-0.5");
+        private readonly Plot2D _plot3 = new Plot2D("-(wrn(0.5-x)-0.5)");
 
         public SobolevWalsh()
         {
@@ -37,9 +37,9 @@ namespace Demo
             var n = (int)nupNum.Value;
             var pow2 = (int)Pow(2, Floor(Log(n - 1, 2)));
 
-            var a = 0.5;
-            _plot.DiscreteFunction = new DiscreteFunction2D(x => -1 / Log(a * x), 0, 1, 1000);
-            _plot.Refresh();
+            //var a = 0.5;
+            //_plot.DiscreteFunction = new DiscreteFunction2D(x => -1 / Log(a * x), 0, 1, 1000);
+            //_plot.Refresh();
 
             //var y = Range(1, 20).Select(k => Sum((int)(Pow(2, k) + 1))(1.0 / Pow(2, k + 1))).ToArray();
             //_plot.DiscreteFunction = y;
@@ -48,9 +48,35 @@ namespace Demo
             //_plot.DiscreteFunction =
             //    new DiscreteFunction2D(WalshSobolev.Get(n), 0, 1, 1024);
             //_plot.Refresh();
+
+            //_plot2.DiscreteFunction =
+            //   new DiscreteFunction2D(WalshSobolev.Get2(n), 0, 1, 1024);
+            //_plot2.Refresh();
+
+            var r = 2;
+            var wrn = WalshSobolev.Get(r, r + pow2);
+            var wrnp1 = WalshSobolev.Get(r, r + n);
+
+            //for (int i = 0; i < 300; i++)
+            //{
+            //    var w1 = WalshSobolev.Get(r, r + i)(1);
+            //    tbLog.AppendText($"{i}; {w1:F10}\r\n");
+            //}
+            //var wrn05 = wrn(0.5);
+            _plot.DiscreteFunction =
+                new DiscreteFunction2D(wrn, 0, 1, 1024);
+            //new DiscreteFunction2D(x => wrn(0.5 + x) - wrn05, 0, 0.5, 1024);
+            //new DiscreteFunction2D(Walsh.Get(n), 0, 1, 1024);
+            _plot.Refresh();
+
             _plot2.DiscreteFunction =
-               new DiscreteFunction2D(WalshSobolev.Get2(n), 0, 1, 1024);
+                new DiscreteFunction2D(wrnp1, 0, 1, 1024);
+            //new DiscreteFunction2D(x => wrn(0.5 - x) - wrn05, 0, 0.5, 1024);
             _plot2.Refresh();
+
+            //_plot3.DiscreteFunction =
+            //   new DiscreteFunction2D(x => -(wrn(0.5 - x) - wrn05), 0, 0.5, 1024);
+            //_plot3.Refresh();
 
             //_plot.DiscreteFunction = new DiscreteFunction2D(x => W12(Math.Pow(2, n) * x) / Math.Pow(2, n), 0, 1, 1024 * 64);
             //_plot.Refresh();
@@ -101,9 +127,7 @@ namespace Demo
                 }
                 return s;
             }
-
             return SumOfn;
-
         }
 
         private DiscreteFunction2D MaxOfS2k(int n)
@@ -148,7 +172,6 @@ namespace Demo
 
         private Func<double, double> SumOfAbs(int n)
         {
-
             double SumOfn(double x)
             {
                 var s = 0d;
@@ -158,9 +181,7 @@ namespace Demo
                 }
                 return s;
             }
-
             return SumOfn;
-
         }
     }
 }
