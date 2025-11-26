@@ -19,7 +19,7 @@ namespace Tests.Polynomials
             Assert.AreEqual(-0.5, t.GetValue(1, -0.5));
 
 
-            Assert.IsFalse(double.IsNaN(t.GetValue(2, -1)));
+            Assert.That(!double.IsNaN(t.GetValue(2, -1)));
 
             Func<double, double> tcheb2 =
                 x => (2 * Pow(x, 2) - 1) / 2;

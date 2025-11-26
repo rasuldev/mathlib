@@ -40,7 +40,7 @@ namespace Tests
             {
                 var testCase = TestCases[i];
                 var value = testedFunc(testCase);
-                Assert.AreEqual(testCase.Result, value, testCase.Delta, $"TestCase {i} failed");
+                Assert.That(testCase.Result, Is.EqualTo(value).Within(testCase.Delta), $"TestCase {i} failed");
             }
         }
 

@@ -31,7 +31,7 @@ namespace Tests
 
             bin = Common.ToBinary(150);
             Assert.AreEqual(8, bin.Length);
-            Assert.AreEqual(new[] { 1, 0, 0, 1, 0, 1, 1, 0 }.Reverse(), bin);
+            Assert.AreEqual(new[] { 1, 0, 0, 1, 0, 1, 1, 0 }.Reverse().ToArray(), bin);
         }
 
         [Test]
