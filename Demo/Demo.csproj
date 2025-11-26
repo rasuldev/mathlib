@@ -111,6 +111,12 @@
     <Compile Include="JacobiForm.Designer.cs">
       <DependentUpon>JacobiForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LegendreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LegendreForm.Designer.cs">
+      <DependentUpon>LegendreForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MixHaar2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="JacobiForm.resx">
       <DependentUpon>JacobiForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LegendreForm.resx">
+      <DependentUpon>LegendreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MixHaar2.resx">
       <DependentUpon>MixHaar2.cs</DependentUpon>

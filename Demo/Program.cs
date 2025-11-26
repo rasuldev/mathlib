@@ -19,7 +19,10 @@ namespace Demo
             //Application.Run(new JacobiForm());
             //Application.Run(new SobolevWalshPartSumExample());
             //Application.Run(new TchebForm());
-            Application.Run(new OdeSpectralLegendre());
+            //Application.Run(new OdeSpectralLegendre());
+            var form = new LegendreForm();
+            Application.Run(form);
+            form.Dispose();
         }
     }
 }
