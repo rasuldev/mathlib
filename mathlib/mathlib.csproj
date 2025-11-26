@@ -40,13 +40,13 @@
     <Reference Include="Endless, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Endless.0.7.0-alpha1\lib\net47\Endless.dll</HintPath>
     </Reference>
-    <Reference Include="MoreLinq, Version=2.9.21302.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\packages\morelinq.2.9.0\lib\net40\MoreLinq.dll</HintPath>
+    <Reference Include="MoreLinq, Version=3.2.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.3.2.0\lib\net451\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -70,6 +70,7 @@
     <Compile Include="FourierSobolevHaar.cs" />
     <Compile Include="FourierWalsh.cs" />
     <Compile Include="FunctionsSystem.cs" />
+    <Compile Include="Functions\Rademacher.cs" />
     <Compile Include="Functions\Walsh.cs" />
     <Compile Include="Functions\WalshSobolev.cs" />
     <Compile Include="IInvFourierTransformer.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="LinearSystem.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="OrthogonalSystem.cs" />
+    <Compile Include="Polynomials\Jacobi.cs" />
     <Compile Include="Polynomials\Laguerre.cs" />
     <Compile Include="Polynomials\LaguerreSobolev.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Symbolic\Integral.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
