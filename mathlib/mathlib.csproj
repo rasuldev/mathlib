@@ -95,6 +95,7 @@
     <Compile Include="OrthogonalSystem.cs" />
     <Compile Include="Polynomials\Jacobi.cs" />
     <Compile Include="Polynomials\Laguerre.cs" />
+    <Compile Include="Polynomials\LegendreSobolev.cs" />
     <Compile Include="Polynomials\LaguerreSobolev.cs" />
     <Compile Include="Polynomials\Legendre.cs" />
     <Compile Include="Polynomials\Tcheb.cs" />
