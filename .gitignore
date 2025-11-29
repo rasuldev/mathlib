@@ -7,3 +7,5 @@
 !*packages/*.config
 .vs/
 *.nupkg
+*.lyx#
+*.lyx~

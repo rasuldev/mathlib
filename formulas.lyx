@@ -118,6 +118,17 @@
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula 
+\[
+-\frac{1}{2n}(1-x^{2})P_{n-1}^{1,1}(x)=∫P_{n}^{0,0}(x)dx
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Перейдем к ортонормированным
 \end_layout
 
@@ -125,6 +136,17 @@
 \begin_inset Formula 
 \[
 ∫\hat{P}{}_{n}^{0,0}(x)dx=-\frac{\sqrt{n+0.5}}{2n}(1-x^{2})P_{n-1}^{1,1}(x)=-\sqrt{\frac{1}{n(n+1)}}(1-x^{2})\hat{P}{}_{n-1}^{1,1}(x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+∫_{-1}^{x}\hat{P}{}_{n}^{0,0}(t)dt=-\sqrt{\frac{1}{n(n+1)}}(1-x^{2})\hat{P}{}_{n-1}^{1,1}(x).
 \]
 
 \end_inset

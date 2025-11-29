@@ -10,7 +10,7 @@ namespace mathlib.Polynomials
     public static class Legendre
     {
         /// <summary>
-        /// Returns normed Tchebyshev polynomials
+        /// Returns normed Legendre polynomials
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>

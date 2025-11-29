@@ -17,7 +17,7 @@ namespace Tests
                 var norm = Integrals.Trapezoid(x => f(x) * f(x), -1, 1, 1024);
                 Assert.That(norm, Is.EqualTo(1).Within(0.001));
             }
-            
+
         }
     }
 }

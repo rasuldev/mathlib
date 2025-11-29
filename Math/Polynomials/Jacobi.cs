@@ -27,10 +27,21 @@ namespace mathlib.Polynomials
                    CalcLambdaCoeff(n - 2, _alpha, _beta) * GetValue(n - 2, x);
         }
 
-
-        public double GetStandardValue(int n, double x)
+        /// <summary>
+        /// Returns normed Jacobi polynomials
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public Func<double,double> Get(int n)
         {
-            throw new NotImplementedException();
+            return x => GetOrthonormalValue(n, x);
+        }
+
+        public Func<double, double> GetStandartized(int n)
+        {
+            double h_n = CalcH(n, _alpha, _beta);
+            double factor = 1.0 / Sqrt(h_n);
+            return x => factor * GetValue(n, x);    
         }
 
         public double GetOrthonormalValue(int n, double x)

@@ -1,4 +1,5 @@
 ﻿using System;
+using mathlib;
 using mathlib.Polynomials;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -82,6 +83,90 @@ namespace Tests.Polynomials
             {
                 double expectedH = 8.0 / (2 * n + 1) * n / (n + 1);
                 Assert.That(Jacobi.CalcH(n - 1, 1, 1), Is.EqualTo(expectedH).Within(1e-10));
+            }
+        }
+
+        [Test]
+        public void GetTest()
+        {
+            var jacobi = new Jacobi(0, 0); // Legendre case
+            var func0 = jacobi.Get(0);
+            Assert.That(func0(0.5), Is.EqualTo(jacobi.GetOrthonormalValue(0, 0.5)).Within(1e-10));
+
+            var func1 = jacobi.Get(1);
+            Assert.That(func1(0.5), Is.EqualTo(jacobi.GetOrthonormalValue(1, 0.5)).Within(1e-10));
+
+            var func2 = jacobi.Get(2);
+            Assert.That(func2(0.5), Is.EqualTo(jacobi.GetOrthonormalValue(2, 0.5)).Within(1e-10));
+
+            // Test with different alpha, beta
+            var jacobi2 = new Jacobi(0.5, 0.5);
+            var func0_2 = jacobi2.Get(0);
+            Assert.That(func0_2(-0.5), Is.EqualTo(jacobi2.GetOrthonormalValue(0, -0.5)).Within(1e-10));
+
+            var func1_2 = jacobi2.Get(1);
+            Assert.That(func1_2(-0.5), Is.EqualTo(jacobi2.GetOrthonormalValue(1, -0.5)).Within(1e-10));
+        }
+
+        [Test]
+        public void OrthogonalityAndNormingTest()
+        {
+            var jacobi = new Jacobi(1, 1);
+            var funcs = new Func<double, double>[5];
+            for (int i = 0; i < 5; i++)
+            {
+                funcs[i] = jacobi.Get(i);
+            }
+
+            int nodesCount = 10000;
+            double a = -1, b = 1;
+
+            for (int m = 0; m < 5; m++)
+            {
+                for (int n = 0; n < 5; n++)
+                {
+                    Func<double, double> integrand = x => funcs[m](x) * funcs[n](x) * (1 - x * x);
+                    double integral = Integrals.Trapezoid(integrand, a, b, nodesCount);
+
+                    if (m == n)
+                    {
+                        Assert.That(integral, Is.EqualTo(1.0).Within(1e-6));
+                    }
+                    else
+                    {
+                        Assert.That(integral, Is.EqualTo(0.0).Within(1e-6));
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public void AntiderivativeRelationTest()
+        {
+            // Test the formula: ∫_{-1}^x \hat{P}_n^{0,0}(t) dt = -√(1/(n(n+1))) (1-x²) \hat{P}_{n-1}^{1,1}(x)
+            var legendre = new Jacobi(0, 0); // \hat{P}_n^{0,0}
+            var jacobi11 = new Jacobi(1, 1); // \hat{P}_n^{1,1}
+
+            int nodesCount = 10000; // for numerical integration
+
+            for (int n = 1; n <= 4; n++) // n from 1 to 4
+            {
+                var legendre_n = legendre.Get(n);
+                var jacobi11_n = jacobi11.Get(n - 1);
+
+                // Test at several points
+                double[] testPoints = { -0.8, -0.5, 0.0, 0.5, 0.8 };
+
+                foreach (double x in testPoints)
+                {
+                    // Numerical integral ∫_{-1}^x Pn(t) dt
+                    double integral = Integrals.Trapezoid(legendre_n, -1, x, nodesCount);
+
+                    // Right-hand side
+                    double rhs = -Sqrt(1.0 / (n * (n + 1))) * (1 - x * x) * jacobi11_n(x);
+
+                    Assert.That(integral, Is.EqualTo(rhs).Within(1e-5));
+                }
             }
         }
     }
