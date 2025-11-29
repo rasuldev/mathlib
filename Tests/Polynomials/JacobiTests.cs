@@ -141,7 +141,7 @@ namespace Tests.Polynomials
         }
 
         [Test]
-        public void AntiderivativeRelationTest()
+        public void IntegralRelationTest()
         {
             // Test the formula: ∫_{-1}^x \hat{P}_n^{0,0}(t) dt = -√(1/(n(n+1))) (1-x²) \hat{P}_{n-1}^{1,1}(x)
             var legendre = new Jacobi(0, 0); // \hat{P}_n^{0,0}

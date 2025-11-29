@@ -1,4 +1,5 @@
 ﻿using mathlib.Functions;
+using mathlib.Polynomials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -253,39 +254,21 @@ namespace mathlib
 
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public class LegendreSystem : IFunctionsSystem
+    public class LegendreSystem : FunctionsSystem
     {
-        public Segment OrthogonalitySegment => new Segment(-1, 1);
-
-        public RealFunction Get(int k)
+        public override Segment OrthogonalitySegment => new Segment(-1, 1);
+        public override RealFunction Get(int k)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<double> GetValuesOnNet(int k, double[] nodes)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RealFunction GetWeighted(int k)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<double> GetWeightedValuesOnNet(int k, double[] nodes)
-        {
-            throw new NotImplementedException();
+            return Legendre.Get(k);
         }
     }
 
-
-
-
-
-
-
-
+    public class SobolevLegendreSystem : FunctionsSystem
+    {
+        public override Segment OrthogonalitySegment => new Segment(-1, 1);
+        public override RealFunction Get(int k)
+        {
+            return LegendreSobolev.Get(k);
+        }
+    }
 }

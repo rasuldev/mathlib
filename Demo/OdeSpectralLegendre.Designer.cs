@@ -28,246 +28,204 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.nupIterCount = new System.Windows.Forms.NumericUpDown();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.nupOrder = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.nupNodesCount = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            this.nupChunksCount = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbLog = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panelBottom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupIterCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupOrder)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupNodesCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupChunksCount)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            nupIterCount = new NumericUpDown();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            label1 = new Label();
+            label2 = new Label();
+            nupOrder = new NumericUpDown();
+            label3 = new Label();
+            nupNodesCount = new NumericUpDown();
+            label4 = new Label();
+            nupChunksCount = new NumericUpDown();
+            label5 = new Label();
+            tbLog = new TextBox();
+            button1 = new Button();
+            panelBottom.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nupIterCount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nupOrder).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nupNodesCount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nupChunksCount).BeginInit();
+            SuspendLayout();
+            // 
+            // panelMain
+            // 
+            panelMain.Size = new Size(1182, 695);
             // 
             // panelBottom
             // 
-            this.panelBottom.Controls.Add(this.button1);
-            this.panelBottom.Controls.Add(this.tbLog);
-            this.panelBottom.Controls.Add(this.label5);
-            this.panelBottom.Controls.Add(this.label4);
-            this.panelBottom.Controls.Add(this.nupChunksCount);
-            this.panelBottom.Controls.Add(this.label3);
-            this.panelBottom.Controls.Add(this.nupNodesCount);
-            this.panelBottom.Controls.Add(this.label2);
-            this.panelBottom.Controls.Add(this.nupOrder);
-            this.panelBottom.Controls.Add(this.label1);
-            this.panelBottom.Controls.Add(this.nupIterCount);
-            this.panelBottom.Location = new System.Drawing.Point(0, 645);
-            this.panelBottom.Size = new System.Drawing.Size(1351, 123);
-            this.panelBottom.Controls.SetChildIndex(this.seriesListBox, 0);
-            this.panelBottom.Controls.SetChildIndex(this.nupIterCount, 0);
-            this.panelBottom.Controls.SetChildIndex(this.label1, 0);
-            this.panelBottom.Controls.SetChildIndex(this.nupOrder, 0);
-            this.panelBottom.Controls.SetChildIndex(this.label2, 0);
-            this.panelBottom.Controls.SetChildIndex(this.nupNodesCount, 0);
-            this.panelBottom.Controls.SetChildIndex(this.label3, 0);
-            this.panelBottom.Controls.SetChildIndex(this.nupChunksCount, 0);
-            this.panelBottom.Controls.SetChildIndex(this.label4, 0);
-            this.panelBottom.Controls.SetChildIndex(this.label5, 0);
-            this.panelBottom.Controls.SetChildIndex(this.tbLog, 0);
-            this.panelBottom.Controls.SetChildIndex(this.button1, 0);
+            panelBottom.Controls.Add(button1);
+            panelBottom.Controls.Add(tbLog);
+            panelBottom.Controls.Add(label5);
+            panelBottom.Controls.Add(label4);
+            panelBottom.Controls.Add(nupChunksCount);
+            panelBottom.Controls.Add(label3);
+            panelBottom.Controls.Add(nupNodesCount);
+            panelBottom.Controls.Add(label2);
+            panelBottom.Controls.Add(nupOrder);
+            panelBottom.Controls.Add(label1);
+            panelBottom.Controls.Add(nupIterCount);
+            panelBottom.Location = new Point(0, 590);
+            panelBottom.Size = new Size(1182, 130);
+            panelBottom.Controls.SetChildIndex(seriesListBox, 0);
+            panelBottom.Controls.SetChildIndex(nupIterCount, 0);
+            panelBottom.Controls.SetChildIndex(label1, 0);
+            panelBottom.Controls.SetChildIndex(nupOrder, 0);
+            panelBottom.Controls.SetChildIndex(label2, 0);
+            panelBottom.Controls.SetChildIndex(nupNodesCount, 0);
+            panelBottom.Controls.SetChildIndex(label3, 0);
+            panelBottom.Controls.SetChildIndex(nupChunksCount, 0);
+            panelBottom.Controls.SetChildIndex(label4, 0);
+            panelBottom.Controls.SetChildIndex(label5, 0);
+            panelBottom.Controls.SetChildIndex(tbLog, 0);
+            panelBottom.Controls.SetChildIndex(button1, 0);
             // 
             // seriesListBox
             // 
-            this.seriesListBox.Margin = new System.Windows.Forms.Padding(5);
-            this.seriesListBox.Size = new System.Drawing.Size(532, 148);
+            seriesListBox.Location = new Point(0, 15);
+            seriesListBox.Margin = new Padding(4, 5, 4, 5);
+            seriesListBox.Size = new Size(466, 124);
             // 
             // nupIterCount
             // 
-            this.nupIterCount.Location = new System.Drawing.Point(547, 32);
-            this.nupIterCount.Margin = new System.Windows.Forms.Padding(4);
-            this.nupIterCount.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.nupIterCount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nupIterCount.Name = "nupIterCount";
-            this.nupIterCount.Size = new System.Drawing.Size(160, 22);
-            this.nupIterCount.TabIndex = 2;
-            this.nupIterCount.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nupIterCount.ValueChanged += new System.EventHandler(this.ValueChanged);
+            nupIterCount.Location = new Point(479, 30);
+            nupIterCount.Margin = new Padding(4);
+            nupIterCount.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            nupIterCount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nupIterCount.Name = "nupIterCount";
+            nupIterCount.Size = new Size(140, 23);
+            nupIterCount.TabIndex = 2;
+            nupIterCount.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            nupIterCount.ValueChanged += ValueChanged;
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(548, 10);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Iterations count";
+            label1.AutoSize = true;
+            label1.Location = new Point(480, 9);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(90, 15);
+            label1.TabIndex = 3;
+            label1.Text = "Iterations count";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(548, 62);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 17);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Partial sums order";
+            label2.AutoSize = true;
+            label2.Location = new Point(480, 58);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(102, 15);
+            label2.TabIndex = 5;
+            label2.Text = "Partial sums order";
             // 
             // nupOrder
             // 
-            this.nupOrder.Location = new System.Drawing.Point(547, 84);
-            this.nupOrder.Margin = new System.Windows.Forms.Padding(4);
-            this.nupOrder.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nupOrder.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nupOrder.Name = "nupOrder";
-            this.nupOrder.Size = new System.Drawing.Size(160, 22);
-            this.nupOrder.TabIndex = 4;
-            this.nupOrder.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nupOrder.ValueChanged += new System.EventHandler(this.ValueChanged);
+            nupOrder.Location = new Point(479, 79);
+            nupOrder.Margin = new Padding(4);
+            nupOrder.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            nupOrder.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nupOrder.Name = "nupOrder";
+            nupOrder.Size = new Size(140, 23);
+            nupOrder.TabIndex = 4;
+            nupOrder.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            nupOrder.ValueChanged += ValueChanged;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(732, 10);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 17);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Nodes count";
+            label3.AutoSize = true;
+            label3.Location = new Point(640, 9);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(75, 15);
+            label3.TabIndex = 7;
+            label3.Text = "Nodes count";
             // 
             // nupNodesCount
             // 
-            this.nupNodesCount.Location = new System.Drawing.Point(731, 32);
-            this.nupNodesCount.Margin = new System.Windows.Forms.Padding(4);
-            this.nupNodesCount.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.nupNodesCount.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.nupNodesCount.Name = "nupNodesCount";
-            this.nupNodesCount.Size = new System.Drawing.Size(89, 22);
-            this.nupNodesCount.TabIndex = 6;
-            this.nupNodesCount.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nupNodesCount.ValueChanged += new System.EventHandler(this.ValueChanged);
+            nupNodesCount.Location = new Point(640, 30);
+            nupNodesCount.Margin = new Padding(4);
+            nupNodesCount.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            nupNodesCount.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
+            nupNodesCount.Name = "nupNodesCount";
+            nupNodesCount.Size = new Size(78, 23);
+            nupNodesCount.TabIndex = 6;
+            nupNodesCount.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            nupNodesCount.ValueChanged += ValueChanged;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(732, 62);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 17);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Chunks count";
+            label4.AutoSize = true;
+            label4.Location = new Point(640, 58);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(81, 15);
+            label4.TabIndex = 9;
+            label4.Text = "Chunks count";
             // 
             // nupChunksCount
             // 
-            this.nupChunksCount.Location = new System.Drawing.Point(731, 84);
-            this.nupChunksCount.Margin = new System.Windows.Forms.Padding(4);
-            this.nupChunksCount.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nupChunksCount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nupChunksCount.Name = "nupChunksCount";
-            this.nupChunksCount.Size = new System.Drawing.Size(89, 22);
-            this.nupChunksCount.TabIndex = 8;
-            this.nupChunksCount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nupChunksCount.ValueChanged += new System.EventHandler(this.ValueChanged);
+            nupChunksCount.Location = new Point(640, 79);
+            nupChunksCount.Margin = new Padding(4);
+            nupChunksCount.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            nupChunksCount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nupChunksCount.Name = "nupChunksCount";
+            nupChunksCount.Size = new Size(78, 23);
+            nupChunksCount.TabIndex = 8;
+            nupChunksCount.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            nupChunksCount.ValueChanged += ValueChanged;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(828, 37);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 17);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "info";
+            label5.AutoSize = true;
+            label5.Location = new Point(724, 35);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(28, 15);
+            label5.TabIndex = 10;
+            label5.Text = "info";
             // 
             // tbLog
             // 
-            this.tbLog.Location = new System.Drawing.Point(910, 31);
-            this.tbLog.Multiline = true;
-            this.tbLog.Name = "tbLog";
-            this.tbLog.Size = new System.Drawing.Size(414, 75);
-            this.tbLog.TabIndex = 11;
+            tbLog.Location = new Point(796, 29);
+            tbLog.Multiline = true;
+            tbLog.Name = "tbLog";
+            tbLog.Size = new Size(363, 71);
+            tbLog.TabIndex = 11;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(833, 78);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(62, 28);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Batch";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.Location = new Point(729, 73);
+            button1.Name = "button1";
+            button1.Size = new Size(54, 26);
+            button1.TabIndex = 12;
+            button1.Text = "Batch";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
-            // OdeSpectral
+            // OdeSpectralLegendre
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1351, 768);
-            this.Margin = new System.Windows.Forms.Padding(5);
-            this.Name = "OdeSpectral";
-            this.Text = "OdeSpectral";
-            this.Controls.SetChildIndex(this.panelBottom, 0);
-            this.panelBottom.ResumeLayout(false);
-            this.panelBottom.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupIterCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupOrder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupNodesCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupChunksCount)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1182, 720);
+            Margin = new Padding(4, 5, 4, 5);
+            Name = "OdeSpectralLegendre";
+            Text = "OdeSpectral";
+            Controls.SetChildIndex(panelMain, 0);
+            Controls.SetChildIndex(panelBottom, 0);
+            panelBottom.ResumeLayout(false);
+            panelBottom.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nupIterCount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nupOrder).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nupNodesCount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nupChunksCount).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

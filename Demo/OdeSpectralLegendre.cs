@@ -45,7 +45,7 @@ namespace Demo
 
         double Solve(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var (segment, y0, f, yExact) = Example3();
+            var (segment, y0, f, yExact) = Example1();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
@@ -53,19 +53,9 @@ namespace Demo
                 exactSolutionPlot.Refresh();
             }
 
-            var legendreSystem = new CosSystem();
-            var sobLegendreSystem = new SobolevCosSystem();
+            var legendreSystem = new LegendreSystem();
+            var sobLegendreSystem = new SobolevLegendreSystem();
             var solverIter = new SobolevSpectralSolverIter(1000, legendreSystem, sobLegendreSystem);
-
-            //var solverIter = new HaarSpectralSolverIter(1000);
-
-            // *************** Chebyshev 1 MF System:  ***************
-            //var cheb1SystemMF = new Cheb1SystemMF_rec();
-            //var cheb1SystemMF = new Cheb1SystemMF();
-            //var sobCheb1SystemMF = new SobolevCheb1SystemMF();
-            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF, sobCheb1SystemMF, true);
-            //var cheb1SystemMF2 = new Cheb1SystemMF_weighted();
-            //var solverIter = new SobolevSpectralSolverIter(1000, cheb1SystemMF2, sobCheb1SystemMF);
 
             var problem = new CauchyProblem(f, y0, segment);
             var df = solverIter.Solve(problem, chunksCount, partSumOrder, iterCount, nodesCount);
