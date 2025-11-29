@@ -63,5 +63,26 @@ namespace Tests.Polynomials
             }
 
         }
+
+        [Test]
+        public void CalcHTest()
+        {
+            // Test for Legendre case (alpha=0, beta=0)
+            Assert.That(Jacobi.CalcH(0, 0, 0), Is.EqualTo(2.0).Within(1e-10));
+            Assert.That(Jacobi.CalcH(1, 0, 0), Is.EqualTo(2.0 / 3.0).Within(1e-10));
+
+            // Test for another case (alpha=0.5, beta=0.5)
+            double expected = Jacobi.CalcH(0, 0.5, 0.5);
+            Assert.That(expected, Is.Not.NaN);
+            Assert.That(expected, Is.Not.EqualTo(double.PositiveInfinity));
+            Assert.That(expected, Is.GreaterThan(0));
+
+            // Test the formula h_{n-1}^{1,1} = 8 / (2n + 1) * n / (n + 1)
+            for (int n = 1; n <= 5; n++)
+            {
+                double expectedH = 8.0 / (2 * n + 1) * n / (n + 1);
+                Assert.That(Jacobi.CalcH(n - 1, 1, 1), Is.EqualTo(expectedH).Within(1e-10));
+            }
+        }
     }
 }

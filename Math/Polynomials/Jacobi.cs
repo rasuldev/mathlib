@@ -69,16 +69,34 @@ namespace mathlib.Polynomials
                         * (beta + 1) / (alpha + beta + 2)
                         * 4 / (alpha + beta + 3);
             }
-                
+
 
             var t = alpha + beta + 2 * n + 1;
-            return (alpha + n + 1) / t 
-                    * (beta + n + 1) / (t + 1) 
+            return (alpha + n + 1) / t
+                    * (beta + n + 1) / (t + 1)
                     * (alpha + beta + n + 1) / (t + 1)
                     * 4 * (n + 1) / (t + 2);
 
 
-            
+
+        }
+
+        /// <summary>
+        /// Calculates h_{n}^{\alpha,\beta} = \frac{2^{\alpha+\beta+1}}{2n+\alpha+\beta+1} \frac{\Gamma(n+\alpha+1)\Gamma(n+\beta+1)}{\Gamma(n+1)\Gamma(n+\alpha+\beta+1)}
+        /// </summary>
+        /// <param name="n">Degree of the polynomial</param>
+        /// <param name="alpha">Alpha parameter</param>
+        /// <param name="beta">Beta parameter</param>
+        /// <returns>The calculated h value</returns>
+        public static double CalcH(int n, double alpha, double beta)
+        {
+            double num = Pow(2, alpha + beta + 1);
+            double den = 2 * n + alpha + beta + 1;
+            double gamma1 = alglib.gammafunction(n + alpha + 1);
+            double gamma2 = alglib.gammafunction(n + beta + 1);
+            double gamma3 = alglib.gammafunction(n + 1);
+            double gamma4 = alglib.gammafunction(n + alpha + beta + 1);
+            return num / den * gamma1 * gamma2 / (gamma3 * gamma4);
         }
 
     }
