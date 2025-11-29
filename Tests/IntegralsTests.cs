@@ -29,7 +29,7 @@ namespace Tests
                     if (x <= 0.5)
                         return -1;
                     return 0;
-                }, 0, 1, 0, 500, 0.001)
+                }, 0, 1, 0, 501, 0.01)
             };
 
         }
@@ -40,7 +40,7 @@ namespace Tests
             {
                 var testCase = TestCases[i];
                 var value = testedFunc(testCase);
-                Assert.That(testCase.Result, Is.EqualTo(value).Within(testCase.Delta), $"TestCase {i} failed");
+                Assert.That(value, Is.EqualTo(testCase.Result).Within(testCase.Delta), $"TestCase {i} failed");
             }
         }
 

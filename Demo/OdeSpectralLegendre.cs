@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DiscreteFunctions;
 using DiscreteFunctionsPlots;
-using Endless;
 using GraphBuilders;
 using mathlib;
 using mathlib.DiffEq;

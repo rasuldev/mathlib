@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="morelinq" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="alglibnet2">
+      <HintPath>..\Libs\alglibnet2.dll</HintPath>
+    </Reference>
+    <Reference Include="DiscreteFunctions">
+      <HintPath>..\Libs\DiscreteFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="Endless">
+      <HintPath>..\Libs\Endless.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
