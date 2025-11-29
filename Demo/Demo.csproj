@@ -30,11 +30,8 @@
     <Reference Include="TeeChart">
       <HintPath>..\Libs\TeeChart.dll</HintPath>
     </Reference>
-    <Reference Include="TeeChart.Direct2D">
-      <HintPath>..\Libs\TeeChart.Direct2D.dll</HintPath>
-    </Reference>
-    <Reference Include="TeeChart.OpenGL">
-      <HintPath>..\Libs\TeeChart.OpenGL.dll</HintPath>
+    <Reference Include="TeeChart.WinForm">
+      <HintPath>..\Libs\TeeChart.WinForm.dll</HintPath>
     </Reference>
   </ItemGroup>
 
