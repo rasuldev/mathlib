@@ -3,7 +3,7 @@ using mathlib.Symbolic;
 
 namespace mathlib
 {
-    public class ScalarMul
+    public class InnerProd
     {
         public static Integral WeightedLebesgue(Func<double, double> f, Func<double, double> g,
             Func<double, double> weight)
