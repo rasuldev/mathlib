@@ -11,10 +11,10 @@ namespace Tests
         [Test]
         public void LegendreNormTest()
         {
-            for (int n = 0; n < 10; n++)
+            for (int n = 0; n < 15; n++)
             {
                 var f = Legendre.Get(n);
-                var norm = Integrals.Trapezoid(x => f(x) * f(x), -1, 1, 1024);
+                var norm = Integrals.Trapezoid(x => f(x) * f(x), -1, 1, 2048);
                 Assert.That(norm, Is.EqualTo(1).Within(0.001));
             }
 
@@ -23,13 +23,13 @@ namespace Tests
         [Test]
         public void LegendreOrthogonalityTest()
         {
-            for (int n = 0; n < 10; n++)
+            for (int n = 0; n < 15; n++)
             {
-                for (int m = n + 1; m < 10; m++)
+                for (int m = n + 1; m < 15; m++)
                 {
                     var fn = Legendre.Get(n);
                     var fm = Legendre.Get(m);
-                    var dot = Integrals.Trapezoid(x => fn(x) * fm(x), -1, 1, 1024);
+                    var dot = Integrals.Trapezoid(x => fn(x) * fm(x), -1, 1, 2048);
                     Assert.That(dot, Is.EqualTo(0).Within(0.001));
                 }
             }
