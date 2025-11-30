@@ -30,11 +30,11 @@ namespace Demo
 
             lengthP = (int) NumP.Value;
             lengthX = (int) NumX.Value;
-            
+
             FindP();
 
-            _plot1.DiscreteFunction = new DiscreteFunction2D(FourierSobolevHaar.Calc(pWithZero), 0, 1, lengthX);
-            _plot2.DiscreteFunction = new DiscreteFunction2D(SobolevHaarLinearCombination.FastCalc(p), 0, 1, lengthX);
+            _plot1.DiscreteFunction = new DiscreteFunction2D(FourierSobolevHaar.Calc(pWithZero!), 0, 1, lengthX);
+            _plot2.DiscreteFunction = new DiscreteFunction2D(SobolevHaarLinearCombination.FastCalc(p!), 0, 1, lengthX);
 
             GraphBuilder.DrawPlot(_plot1);
             GraphBuilder.DrawPlot(_plot2);
