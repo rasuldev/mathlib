@@ -168,5 +168,16 @@
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\langle f,g\rangle=f(a)g(a)+\int_{a}^{b}f'(x)g'(x)(1-x)^{\alpha}(1+x)^{\beta}dx.
+\]
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document

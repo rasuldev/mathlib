@@ -50,7 +50,7 @@
             // 
             // panelMain
             // 
-            panelMain.Size = new Size(1182, 695);
+            panelMain.Size = new Size(1194, 468);
             // 
             // panelBottom
             // 
@@ -65,8 +65,8 @@
             panelBottom.Controls.Add(nupOrder);
             panelBottom.Controls.Add(label1);
             panelBottom.Controls.Add(nupIterCount);
-            panelBottom.Location = new Point(0, 590);
-            panelBottom.Size = new Size(1182, 130);
+            panelBottom.Location = new Point(0, 563);
+            panelBottom.Size = new Size(1194, 180);
             panelBottom.Controls.SetChildIndex(seriesListBox, 0);
             panelBottom.Controls.SetChildIndex(nupIterCount, 0);
             panelBottom.Controls.SetChildIndex(label1, 0);
@@ -212,7 +212,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1182, 720);
+            ClientSize = new Size(1194, 693);
             Margin = new Padding(4, 5, 4, 5);
             Name = "OdeSpectralLegendre";
             Text = "OdeSpectral";
