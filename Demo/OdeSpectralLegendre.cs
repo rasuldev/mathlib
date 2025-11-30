@@ -45,7 +45,7 @@ namespace Demo
 
         double Solve(int partSumOrder, int iterCount, int nodesCount, int chunksCount)
         {
-            var (segment, y0, f, yExact) = Example1();
+            var (segment, y0, f, yExact) = ExampleDiscontinuous1();
             var nodes = Range(0, nodesCount).Select(j => segment.Start + segment.Length * j / (nodesCount - 1)).ToArray();
             if (yExact != null)
             {
